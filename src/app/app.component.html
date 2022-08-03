@@ -1,7 +1,46 @@
 <div fxLayout="column" fxLayoutAlign="start none" style="height: 100%;">
   <mat-drawer-container style="height: 100%;">
-    <mat-drawer mode="over" #drawer>
-      &nbsp;
+    <mat-drawer mode="over" #drawer style="width: 50%;">
+      <div fxFlex="90">
+      <mat-chip-list #chipList>
+        <mat-chip>
+          Arroz
+          <button matChipRemove>
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-chip>
+        <mat-chip>
+          Feijão
+          <button matChipRemove>
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-chip>
+        <mat-chip>
+          Açucar
+          <button matChipRemove>
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-chip>
+        <mat-chip>
+          Sabonete
+          <button matChipRemove>
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-chip>
+        <mat-chip>
+          Sabão em pó
+          <button matChipRemove>
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-chip>
+        <mat-chip>
+          Pepel higiênico
+          <button matChipRemove>
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
     </mat-drawer>
     <mat-drawer-content fxLayout="column" fxLayoutAlign="start none" style="height: 100%;">
       <mat-toolbar>
@@ -10,9 +49,14 @@
         </button>
         <span fxFlex>{{ sum | currency:'BRL':'' }}</span>
         <span class="example-spacer"></span>
-        <button mat-icon-button>
+        <button mat-icon-button [matMenuTriggerFor]="menuGeral">
           <mat-icon matBadge="{{count}}" matBadgeOverlap="true">shopping_cart</mat-icon>
         </button>
+        <mat-menu #menuGeral="matMenu">
+          <button mat-menu-item (click)="removeAll()" [disabled]="items.length==0">            
+            Esvaziar carrinho
+          </button>
+        </mat-menu>
       </mat-toolbar>
       <mat-accordion multi>
         <mat-expansion-panel expanded="true">
@@ -22,33 +66,36 @@
               <mat-icon>pin</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <mat-card>
+          <mat-card fxLayout="column" fxLayoutAlign="start center" style="height: 100%;">
             <div>
-              <button mat-raised-button (click)="concatValor('1')">1</button>
-              <button mat-raised-button (click)="concatValor('2')">2</button>
-              <button mat-raised-button (click)="concatValor('3')">3</button>
+              <div>
+                <button mat-raised-button (click)="concatValor('1')">1</button>
+                <button mat-raised-button (click)="concatValor('2')">2</button>
+                <button mat-raised-button (click)="concatValor('3')">3</button>
+              </div>
+              <div>
+                <button mat-raised-button (click)="concatValor('4')">4</button>
+                <button mat-raised-button (click)="concatValor('5')">5</button>
+                <button mat-raised-button (click)="concatValor('6')">6</button>
+              </div>
+              <div>
+                <button mat-raised-button (click)="concatValor('7')">7</button>
+                <button mat-raised-button (click)="concatValor('8')">8</button>
+                <button mat-raised-button (click)="concatValor('9')">9</button>
+              </div>
+              <div>
+                <button mat-raised-button (click)="backspaceValor()">
+                  <mat-icon>backspace</mat-icon>
+                </button>
+                <button mat-raised-button (click)="concatValor('0')">0</button>
+                <button mat-raised-button (click)="concatValor('')">C</button>
+              </div>
             </div>
-            <div>
-              <button mat-raised-button (click)="concatValor('4')">4</button>
-              <button mat-raised-button (click)="concatValor('5')">5</button>
-              <button mat-raised-button (click)="concatValor('6')">6</button>
-            </div>
-            <div>
-              <button mat-raised-button (click)="concatValor('7')">7</button>
-              <button mat-raised-button (click)="concatValor('8')">8</button>
-              <button mat-raised-button (click)="concatValor('9')">9</button>
-            </div>
-            <div>
-              <button mat-raised-button (click)="backspaceValor()">
-                <mat-icon>backspace</mat-icon>
-              </button>
-              <button mat-raised-button (click)="concatValor('0')">0</button>
-              <button mat-raised-button (click)="concatValor('.')">,</button>
-            </div>
-            <div>
-              <button mat-raised-button color="primary" style="width: 100%;" (click)="setCheckouItem(valor);">
+            <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+              <h1>{{ valorReal | currency:'BRL':'' }}</h1>              
+              <button mat-raised-button color="primary" (click)="setCheckouItem();" [disabled]="!(valorReal > 0)">
                 <mat-icon *ngIf="multi">autorenew</mat-icon>
-                &nbsp;{{valor}}
+                Adicionar
               </button>
             </div>
           </mat-card>

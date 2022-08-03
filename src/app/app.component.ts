@@ -9,12 +9,13 @@ import {ItemInfo} from './model/item-info'
 })
 export class AppComponent {
   title: string = "Mercado"
-  valor: string = ""  
+  valor: string = "0" 
+  valorReal: number = 0 
   sum: number = 0
   count: number = 0
   multi: boolean = false
   showFiller: boolean = false
-  items: ItemInfo[] = []  
+  items: ItemInfo[] = []
 
   constructor(private checkoutService: CheckoutService) { 
     let obj = <string>localStorage.getItem("CartItems");
@@ -24,9 +25,8 @@ export class AppComponent {
     }
   }
 
-  setCheckouItem(i: string): void {
-    if((i.length == 0)) return    
-    let v = parseFloat(i)
+  setCheckouItem(): void {
+    let v = this.valorReal
     if(!(v > 0)) return
 
     let item: ItemInfo
@@ -51,6 +51,11 @@ export class AppComponent {
     this.sumItem()
   }
 
+  removeAll(): void {
+    this.items = [];
+    this.sumItem()
+  }
+
   sumItem(): void {
     let s = 0
     let c = 0
@@ -69,15 +74,16 @@ export class AppComponent {
   }
 
   concatValor(v: string): void {
-    if(this.multi) this.valor = ''
+    if(this.multi || v.length == 0) this.valor = '0'
     this.multi = false
-
-    if(v == '.' && this.valor.indexOf('.') >= 0) return
     this.valor += v
+    this.valorReal = parseFloat(this.valor) / 100
   }
 
   backspaceValor(): void {
     this.multi = false
     this.valor = this.valor.slice(0, -1)
+    if(this.valor.length == 0) this.valor = '0'
+    this.valorReal = parseFloat(this.valor) / 100
   }
 }
