@@ -30,7 +30,7 @@ export class AppComponent {
   sum: number = 0
   count: number = 0
   multi: boolean = false
-  keyboard: boolean = true
+  showFiller: boolean = false
 
   setCheckouItem(i: string): void {
     if((i.length == 0)) return    
