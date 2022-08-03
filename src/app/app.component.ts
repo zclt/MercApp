@@ -8,29 +8,21 @@ import {ItemInfo} from './model/item-info'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private checkoutService: CheckoutService) { }
-
   title: string = "Mercado"
-  items: ItemInfo[] = [
-    new ItemInfo(2.99, 1), 
-    new ItemInfo(3.49, 1), 
-    new ItemInfo(1.99, 3), 
-    new ItemInfo(1.99, 3), 
-    new ItemInfo(1.99, 3), 
-    new ItemInfo(1.99, 3), 
-    new ItemInfo(1.99, 3), 
-    new ItemInfo(1.99, 3), 
-    new ItemInfo(1.99, 3), 
-    new ItemInfo(1.99, 3), 
-    new ItemInfo(1.99, 3), 
-    new ItemInfo(1.99, 3), 
-    new ItemInfo(4.85, 2)
-  ]  
   valor: string = ""  
   sum: number = 0
   count: number = 0
   multi: boolean = false
   showFiller: boolean = false
+  items: ItemInfo[] = []  
+
+  constructor(private checkoutService: CheckoutService) { 
+    let obj = <string>localStorage.getItem("CartItems");
+    if(obj) {
+      this.items = <ItemInfo[]>JSON.parse(obj)
+      this.sumItem()
+    }
+  }
 
   setCheckouItem(i: string): void {
     if((i.length == 0)) return    
@@ -68,6 +60,8 @@ export class AppComponent {
     })
     this.sum = s
     this.count = c
+
+    localStorage.setItem("CartItems", JSON.stringify(this.items));
   }
 
   getItems(): ItemInfo[] {
