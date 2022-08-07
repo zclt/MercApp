@@ -21,6 +21,7 @@ export class AppComponent {
   showFiller: boolean = false
   items: ItemInfo[] = []
   itemsTodo: ItemTodo[] = []
+  sidePosition = "start"
 
   constructor(private checkoutService: CheckoutService, public dialog: MatDialog) {
     let obj = <string>localStorage.getItem("CartItems");

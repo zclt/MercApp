@@ -20,7 +20,7 @@
     </mat-drawer>
     <mat-drawer-content fxLayout="column" fxLayoutAlign="start none" style="height: 100%;">
       <mat-toolbar>
-        <button mat-icon-button (click)="drawer.toggle()">
+        <button mat-icon-button (click)="drawer.position='start';drawer.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
         <span fxFlex>{{ sum | currency:'BRL':'' }}</span>
@@ -104,6 +104,9 @@
           </mat-card>
         </mat-expansion-panel>
       </mat-accordion>
+      <button mat-fab id="todo-list" color="primary" (click)="drawer.position='end';drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
     </mat-drawer-content>
   </mat-drawer-container>
 </div>
