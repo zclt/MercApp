@@ -34,6 +34,32 @@
           </button>
         </mat-menu>
       </mat-toolbar>
+      <mat-card fxFlex style="overflow: auto;">
+        <div *ngFor="let item of items;let i = index">
+          <mat-card fxLayout="row" fxLayoutAlign="start center" fxFlex style="margin-bottom: 5px;">
+            <div fxFlex="80">
+              <p><span style="font-size: 10px;">{{ item.count }} X</span> {{ item.valor | currency:'BRL':'' }}</p>
+              <div>{{ item.nome }}</div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="end">
+              <button mat-icon-button color="basic" (click)="addCheckouItem(item)">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button color="basic" (click)="reduceCheckouItem(item, i)">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="removeCheckouItem(i)">
+                  Excluir item
+                </button>
+              </mat-menu>
+            </div>
+          </mat-card>
+        </div>
+      </mat-card>
       <mat-accordion multi>
         <mat-expansion-panel expanded="true">
           <mat-expansion-panel-header>
@@ -78,32 +104,6 @@
           </mat-card>
         </mat-expansion-panel>
       </mat-accordion>
-      <mat-card fxFlex style="overflow: auto;">
-        <div *ngFor="let item of items;let i = index">
-          <mat-card fxLayout="row" fxLayoutAlign="start center" fxFlex style="margin-bottom: 5px;">
-            <div fxFlex="80">
-              <p><span style="font-size: 10px;">{{ item.count }} X</span> {{ item.valor | currency:'BRL':'' }}</p>
-              <div>{{ item.nome }}</div>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="end">
-              <button mat-icon-button color="basic" (click)="addCheckouItem(item)">
-                <mat-icon>add</mat-icon>
-              </button>
-              <button mat-icon-button color="basic" (click)="reduceCheckouItem(item, i)">
-                <mat-icon>remove</mat-icon>
-              </button>
-              <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="removeCheckouItem(i)">
-                  Excluir item
-                </button>
-              </mat-menu>
-            </div>
-          </mat-card>
-        </div>
-      </mat-card>
     </mat-drawer-content>
   </mat-drawer-container>
 </div>
