@@ -127,6 +127,11 @@ export class AppComponent {
     this.sumItem()
   }
 
+  removeItemTodo(index: number): void {    
+    this.itemsTodo.splice(index, 1)
+    this.sumItem()
+  }
+
   openDialog(): void {
     const dialogRef = this.dialog.open(AddItemComponent, {
       data: { nome: '' },
@@ -136,6 +141,7 @@ export class AppComponent {
       console.log('The dialog was closed');
       if (result) {
         this.itemsTodo.unshift(new ItemTodo(result, false))
+        this.sumItem()
         this.openDialog()
       }
     });

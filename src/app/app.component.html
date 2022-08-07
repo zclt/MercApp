@@ -7,11 +7,11 @@
           <mat-card fxFlex style="overflow: auto;">
             <mat-chip-list #chipList *ngFor="let item of itemsTodo;let i = index">
               <mat-chip (click)="checkItem(item);drawer.toggle()">
-                <span [ngClass]="item.checked ? 'checkedClass' : 'uncheckedClass'">{{ item.nome }}</span>
-                <button matChipRemove>
-                  <mat-icon>add</mat-icon>
-                </button>
+                <span [ngClass]="item.checked ? 'checkedClass' : 'uncheckedClass'">{{ item.nome }}</span>                
               </mat-chip>
+              <button mat-icon-button color="~primary" (click)="removeItemTodo(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
             </mat-chip-list>
           </mat-card>
         </div>
