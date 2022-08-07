@@ -29,3 +29,11 @@
   text-transform: capitalize;
   font-weight: bold;
 }
+
+#todo-list {
+  top: auto;
+  right: 30px;
+  bottom: 25px;
+  left: auto;
+  position: fixed;
+}
