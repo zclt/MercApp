@@ -24,10 +24,10 @@ export class AppComponent {
 
   constructor(private checkoutService: CheckoutService, public dialog: MatDialog) {
     let obj = <string>localStorage.getItem("CartItems");
-    if (obj) {
-      this.items = <ItemInfo[]>JSON.parse(obj)
-      this.sumItem()
-    }
+    let obj2 = <string>localStorage.getItem("TodoItems");
+    if (obj) this.items = <ItemInfo[]>JSON.parse(obj)
+    if (obj2) this.itemsTodo = <ItemTodo[]>JSON.parse(obj2)
+    this.sumItem()
   }
 
   setCheckouItem(): void {
@@ -87,6 +87,7 @@ export class AppComponent {
     this.count = c
 
     localStorage.setItem("CartItems", JSON.stringify(this.items));
+    localStorage.setItem("TodoItems", JSON.stringify(this.itemsTodo));
   }
 
   getItems(): ItemInfo[] {
@@ -112,27 +113,31 @@ export class AppComponent {
 
   checkItem(item: ItemTodo): void {
     item.checked = true
+    this.concatValor('')
     this.nome = item.nome
   }
 
   resetItemsTodo(): void {
-    this.itemsTodo = []
+    this.itemsTodo = []    
+    this.sumItem()
   }
 
   uncheckItemsTodo(): void {
     this.itemsTodo.forEach(i => i.checked = false)
+    this.sumItem()
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(AddItemComponent, {
-      width: '250px',
       data: { nome: '' },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      if (result)
+      if (result) {
         this.itemsTodo.unshift(new ItemTodo(result, false))
+        this.openDialog()
+      }
     });
   }
 }
