@@ -1,46 +1,22 @@
 <div fxLayout="column" fxLayoutAlign="start none" style="height: 100%;">
   <mat-drawer-container style="height: 100%;">
     <mat-drawer mode="over" #drawer style="width: 50%;">
-      <div fxFlex="90">
-      <mat-chip-list #chipList>
-        <mat-chip>
-          Arroz
-          <button matChipRemove>
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-chip>
-        <mat-chip>
-          Feijão
-          <button matChipRemove>
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-chip>
-        <mat-chip>
-          Açucar
-          <button matChipRemove>
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-chip>
-        <mat-chip>
-          Sabonete
-          <button matChipRemove>
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-chip>
-        <mat-chip>
-          Sabão em pó
-          <button matChipRemove>
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-chip>
-        <mat-chip>
-          Pepel higiênico
-          <button matChipRemove>
-            <mat-icon>add</mat-icon>
-          </button>
-        </mat-chip>
-      </mat-chip-list>
-    </div>
+      <div fxLayout="column" fxLayoutAlign="start none" fxFlex>
+        <button mat-raised-button (click)="openDialog()">Adicionar</button>
+        <div fxFlex="90">
+          <mat-card fxFlex style="overflow: auto;">
+            <mat-chip-list #chipList *ngFor="let item of itemsTodo;let i = index">
+              <mat-chip (click)="checkItem(item);drawer.toggle()">
+                <span [ngClass]="item.checked ? 'checkedClass' : 'uncheckedClass'">{{ item.nome }}</span>
+                <button matChipRemove>
+                  <mat-icon>add</mat-icon>
+                </button>
+              </mat-chip>
+            </mat-chip-list>
+          </mat-card>
+        </div>
+        <button mat-raised-button (click)="resetItemsTodo()">Limpar</button>
+      </div>
     </mat-drawer>
     <mat-drawer-content fxLayout="column" fxLayoutAlign="start none" style="height: 100%;">
       <mat-toolbar>
@@ -53,7 +29,7 @@
           <mat-icon matBadge="{{count}}" matBadgeOverlap="true">shopping_cart</mat-icon>
         </button>
         <mat-menu #menuGeral="matMenu">
-          <button mat-menu-item (click)="removeAll()" [disabled]="items.length==0">            
+          <button mat-menu-item (click)="resetAll()" [disabled]="items.length==0">
             Esvaziar carrinho
           </button>
         </mat-menu>
@@ -92,7 +68,8 @@
               </div>
             </div>
             <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-              <h1>{{ valorReal | currency:'BRL':'' }}</h1>              
+              <h1>{{ valorReal | currency:'BRL':'' }}</h1>
+              <h2>{{ nome }}</h2>
               <button mat-raised-button color="primary" (click)="setCheckouItem();" [disabled]="!(valorReal > 0)">
                 <mat-icon *ngIf="multi">autorenew</mat-icon>
                 Adicionar
@@ -102,24 +79,30 @@
         </mat-expansion-panel>
       </mat-accordion>
       <mat-card fxFlex style="overflow: auto;">
-        <mat-list *ngFor="let item of items;let i = index">
-          <mat-list-item>
-            <div>
-              <span style="font-size: 10px;">{{ item.count }} X</span> {{ item.valor | currency:'BRL':'' }}
+        <div *ngFor="let item of items;let i = index">
+          <mat-card fxLayout="row" fxLayoutAlign="start center" fxFlex style="margin-bottom: 5px;">
+            <div fxFlex="80">
+              <p><span style="font-size: 10px;">{{ item.count }} X</span> {{ item.valor | currency:'BRL':'' }}</p>
+              <div>{{ item.nome }}</div>
             </div>
-            <button mat-icon-button [matMenuTriggerFor]="menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="removeCheckouItem(i)">
-                <mat-icon>delete</mat-icon>
-              </button>
-              <button mat-menu-item disabled>
+            <div fxLayout="row" fxLayoutAlign="end">
+              <button mat-icon-button color="basic" (click)="addCheckouItem(item)">
                 <mat-icon>add</mat-icon>
               </button>
-            </mat-menu>
-          </mat-list-item>
-        </mat-list>
+              <button mat-icon-button color="basic" (click)="reduceCheckouItem(item, i)">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="removeCheckouItem(i)">
+                  Excluir item
+                </button>
+              </mat-menu>
+            </div>
+          </mat-card>
+        </div>
       </mat-card>
     </mat-drawer-content>
   </mat-drawer-container>

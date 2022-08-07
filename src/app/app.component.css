@@ -1,6 +1,7 @@
 .example-spacer {
   flex: 1 1 auto;
 }
+
 .example-container {
   width: 500px;
   height: 300px;
@@ -16,4 +17,15 @@
 
 .example-sidenav {
   padding: 20px;
+}
+
+.checkedClass {
+  text-decoration: line-through;
+  text-transform: lowercase;
+  font-weight: normal;
+}
+
+.uncheckedClass {
+  text-transform: capitalize;
+  font-weight: bold;
 }

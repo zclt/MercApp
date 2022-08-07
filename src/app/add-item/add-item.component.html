@@ -1,0 +1,9 @@
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Produto</mat-label>
+    <input matInput [(ngModel)]="data.nome" cdkFocusInitial>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data.nome">Ok</button>
+</div>
