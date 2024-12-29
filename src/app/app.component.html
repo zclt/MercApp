@@ -38,16 +38,16 @@
         <div *ngFor="let item of items;let i = index">
           <mat-card fxLayout="row" fxLayoutAlign="start center" fxFlex style="margin-bottom: 5px;">
             <div fxFlex="80">
-              <p><span style="font-size: 10px;">{{ item.count }} X</span> {{ item.valor | currency:'BRL':'' }}</p>
+              <p><span style="font-size: 10px;">{{ item.count }} X</span> {{ item.valor | currency:'BRL':'' }} = {{ item.valor * item.count | currency:'BRL':'' }}</p>
               <div>{{ item.nome }}</div>
             </div>
             <div fxLayout="row" fxLayoutAlign="end">
-              <button mat-icon-button color="basic" (click)="addCheckouItem(item)">
-                <mat-icon>add</mat-icon>
-              </button>
-              <button mat-icon-button color="basic" (click)="reduceCheckouItem(item, i)">
-                <mat-icon>remove</mat-icon>
-              </button>
+                <button mat-icon-button color="basic" (click)="addCheckouItem(item)">
+                  <mat-icon>add</mat-icon>
+                </button>
+                <button mat-icon-button color="basic" (click)="reduceCheckouItem(item, i)">
+                  <mat-icon>remove</mat-icon>
+                </button>
               <button mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
               </button>
