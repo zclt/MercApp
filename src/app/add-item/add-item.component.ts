@@ -14,4 +14,8 @@ export class AddItemComponent {
   
   constructor(public dialogRef: MatDialogRef<AddItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+
+  confirmar() {
+    this.dialogRef.close(this.data.nome);
+  }
 }

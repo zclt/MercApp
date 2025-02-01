@@ -1,5 +1,4 @@
 import { Component } from '@angular/core'
-import { CheckoutService } from './checkout.service'
 import { ItemInfo } from './model/item-info'
 import { ItemTodo } from './model/item-todo'
 import { MatDialog } from '@angular/material/dialog'
@@ -23,7 +22,7 @@ export class AppComponent {
   itemsTodo: ItemTodo[] = []
   sidePosition = "start"
 
-  constructor(private checkoutService: CheckoutService, public dialog: MatDialog) {
+  constructor(public dialog: MatDialog) {
     let obj = <string>localStorage.getItem("CartItems");
     let obj2 = <string>localStorage.getItem("TodoItems");
     if (obj) this.items = <ItemInfo[]>JSON.parse(obj)
