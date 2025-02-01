@@ -1,7 +1,10 @@
 <div mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>Produto</mat-label>
-    <input matInput [(ngModel)]="data.nome" cdkFocusInitial>
+    <input matInput 
+      [(ngModel)]="data.nome" 
+      cdkFocusInitial 
+      (keydown.enter)="confirmar()">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
