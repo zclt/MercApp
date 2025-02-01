@@ -31,7 +31,7 @@ export class AppComponent {
     this.sumItem()
   }
 
-  setCheckouItem(): void {
+  setCheckoutItem(): void {
     let v = this.valorReal
     if (!(v > 0)) return
 
@@ -51,23 +51,23 @@ export class AppComponent {
     this.sumItem()
   }
 
-  removeCheckouItem(index: number): void {
+  removeCheckoutItem(index: number): void {
     this.items.splice(index, 1)
     this.concatValor('')
     this.sumItem()
   }
 
-  addCheckouItem(item: ItemInfo): void {
+  addCheckoutItem(item: ItemInfo): void {
     item.count++;
     this.sumItem()
   }
 
-  reduceCheckouItem(item: ItemInfo, index: number): void {
+  reduceCheckoutItem(item: ItemInfo, index: number): void {
     item.count--;
     if (item.count > 0)
       this.sumItem()
     else
-      this.removeCheckouItem(index)
+      this.removeCheckoutItem(index)
   }
 
   resetAll(): void {
@@ -139,7 +139,6 @@ export class AppComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       if (result) {
         this.itemsTodo.unshift(new ItemTodo(result, false))
         this.sumItem()
