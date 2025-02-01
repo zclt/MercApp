@@ -42,17 +42,17 @@
               <div>{{ item.nome }}</div>
             </div>
             <div fxLayout="row" fxLayoutAlign="end">
-                <button mat-icon-button color="basic" (click)="addCheckouItem(item)">
+                <button mat-icon-button color="basic" (click)="addCheckoutItem(item)">
                   <mat-icon>add</mat-icon>
                 </button>
-                <button mat-icon-button color="basic" (click)="reduceCheckouItem(item, i)">
+                <button mat-icon-button color="basic" (click)="reduceCheckoutItem(item, i)">
                   <mat-icon>remove</mat-icon>
                 </button>
               <button mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="removeCheckouItem(i)">
+                <button mat-menu-item (click)="removeCheckoutItem(i)">
                   Excluir item
                 </button>
               </mat-menu>
@@ -96,7 +96,7 @@
             <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
               <h1>{{ valorReal | currency:'BRL':'' }}</h1>
               <h2>{{ nome }}</h2>
-              <button mat-raised-button color="primary" (click)="setCheckouItem();" [disabled]="!(valorReal > 0)">
+              <button mat-raised-button color="primary" (click)="setCheckoutItem();" [disabled]="!(valorReal > 0)">
                 <mat-icon *ngIf="multi">autorenew</mat-icon>
                 Adicionar
               </button>
