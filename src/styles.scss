@@ -1,0 +1,28 @@
+@use '@angular/material' as mat;
+@import 'material-icons/iconfont/material-icons.css';
+
+$mercapp-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$green-palette,
+    tertiary: mat.$orange-palette,
+  ),
+  typography: (
+    brand-family: 'Roboto',
+    plain-family: 'Roboto',
+  ),
+  density: (scale: 0),
+));
+
+html {
+  @include mat.all-component-themes($mercapp-theme);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

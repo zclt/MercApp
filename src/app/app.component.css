@@ -2,38 +2,80 @@ button {
   touch-action: manipulation;
 }
 
-.flex-col {
-  display: flex;
-  flex-direction: column;
+/* --- Layout --- */
+.flex-col        { display: flex; flex-direction: column; }
+.flex-col-center { display: flex; flex-direction: column; align-items: center; }
+.flex-row-center { display: flex; flex-direction: row; align-items: center; }
+.flex-row-end    { display: flex; flex-direction: row; justify-content: flex-end; }
+.flex-1          { flex: 1; min-height: 0; }
+.example-spacer  { flex: 1 1 auto; }
+
+/* --- Toolbar --- */
+.toolbar-total {
+  font-size: 1.25rem;
+  font-weight: 500;
 }
 
-.flex-col-center {
+/* --- Cart items --- */
+.item-card {
+  margin-bottom: 8px;
+  padding: 8px 4px 8px 12px;
+}
+
+.item-price {
+  margin: 0 0 2px;
+  font-size: 0.9rem;
+}
+
+.item-count {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  margin-right: 4px;
+}
+
+.item-subtotal {
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.item-name {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+/* --- Empty states --- */
+.empty-cart,
+.empty-list {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  opacity: 0.5;
 }
 
-.flex-row-center {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.empty-cart mat-icon,
+.empty-list mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
 }
 
-.flex-row-end {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+.empty-cart p,
+.empty-list p {
+  margin: 4px 0 0;
+  font-size: 1rem;
+  font-weight: 500;
 }
 
-.flex-1 {
-  flex: 1;
-  min-height: 0;
+.empty-cart span,
+.empty-list span {
+  font-size: 0.82rem;
 }
 
-.example-spacer {
-  flex: 1 1 auto;
-}
-
+/* --- Shopping list chips --- */
 .checkedClass {
   text-decoration: line-through;
   text-transform: lowercase;
@@ -45,6 +87,76 @@ button {
   font-weight: bold;
 }
 
+/* --- Keypad --- */
+.keypad-card {
+  height: 100%;
+  padding: 8px 4px;
+}
+
+.keypad {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.keypad-row {
+  display: flex;
+  gap: 6px;
+}
+
+.keypad-row button {
+  flex: 1;
+  min-width: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* --- Price display --- */
+.price-display {
+  padding: 8px 0 4px;
+  gap: 2px;
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.price-label {
+  font-size: 0.75rem;
+  opacity: 0.55;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.price-value {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.price-name {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.add-btn {
+  margin-top: 8px;
+  min-width: 140px;
+}
+
+@keyframes item-added-flash {
+  0%   { background-color: transparent; }
+  30%  { background-color: rgba(76, 175, 80, 0.18); }
+  100% { background-color: transparent; }
+}
+
+.item-added {
+  animation: item-added-flash 0.4s ease;
+}
+
+/* --- FAB todo list --- */
 #todo-list {
   position: fixed;
   top: auto;

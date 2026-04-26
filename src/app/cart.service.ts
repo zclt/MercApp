@@ -50,4 +50,8 @@ export class CartService {
   reset(): void {
     this.items.set([]);
   }
+
+  restore(backup: ItemInfo[]): void {
+    this.items.set(backup);
+  }
 }
