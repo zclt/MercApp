@@ -1,136 +1,90 @@
-import { Component } from '@angular/core'
-import { ItemInfo } from './model/item-info'
-import { ItemTodo } from './model/item-todo'
-import { MatDialog } from '@angular/material/dialog'
-import { AddItemComponent } from './add-item/add-item.component'
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { CurrencyPipe, NgClass } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CartService } from './cart.service';
+import { ShoppingListService } from './shopping-list.service';
+import { AddItemComponent } from './add-item/add-item.component';
+import { ItemTodo } from './model/item-todo';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    NgClass,
+    CurrencyPipe,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatBadgeModule,
+    MatSidenavModule,
+    MatExpansionModule,
+    MatMenuModule,
+    MatChipsModule,
+    MatDialogModule,
+  ],
 })
 export class AppComponent {
-  title: string = "Mercado"
-  nome: string = ""
-  valor: string = "0"
-  valorReal: number = 0
-  sum: number = 0
-  count: number = 0
-  multi: boolean = false
-  showFiller: boolean = false
-  items: ItemInfo[] = []
-  itemsTodo: ItemTodo[] = []
-  sidePosition = "start"
+  protected readonly cart = inject(CartService);
+  protected readonly list = inject(ShoppingListService);
+  private readonly dialog = inject(MatDialog);
 
-  constructor(public dialog: MatDialog) {
-    let obj = <string>localStorage.getItem("CartItems");
-    let obj2 = <string>localStorage.getItem("TodoItems");
-    if (obj) this.items = <ItemInfo[]>JSON.parse(obj)
-    if (obj2) this.itemsTodo = <ItemTodo[]>JSON.parse(obj2)
-    this.sumItem()
-  }
+  nome = '';
+  valor = '0';
+  valorReal = 0;
+  multi = false;
 
   setCheckoutItem(): void {
-    let v = this.valorReal
-    if (!(v > 0)) return
-
-    let item: ItemInfo
-
-    if (this.multi) {
-      item = this.items[0]
-      this.items.splice(0, 1)
-      if (item) item.count++
-    } else {
-      item = new ItemInfo(v, 1, this.nome)
-      this.multi = true
-    }
-
-    this.items.unshift(item)
-    this.multi = true
-    this.sumItem()
+    if (!(this.valorReal > 0)) return;
+    this.cart.addOrIncrement(this.valorReal, this.nome, this.multi);
+    this.multi = true;
   }
 
   removeCheckoutItem(index: number): void {
-    this.items.splice(index, 1)
-    this.concatValor('')
-    this.sumItem()
-  }
-
-  addCheckoutItem(item: ItemInfo): void {
-    item.count++;
-    this.sumItem()
-  }
-
-  reduceCheckoutItem(item: ItemInfo, index: number): void {
-    item.count--;
-    if (item.count > 0)
-      this.sumItem()
-    else
-      this.removeCheckoutItem(index)
+    this.cart.remove(index);
+    this.concatValor('');
   }
 
   resetAll(): void {
-    this.items = []
-    this.concatValor('')
-    this.sumItem()
-    this.uncheckItemsTodo()
-  }
-
-  sumItem(): void {
-    let s = 0
-    let c = 0
-    this.items.forEach(i => {
-      s += (i.valor * i.count)
-      c += i.count
-    })
-    this.sum = s
-    this.count = c
-
-    localStorage.setItem("CartItems", JSON.stringify(this.items));
-    localStorage.setItem("TodoItems", JSON.stringify(this.itemsTodo));
-  }
-
-  getItems(): ItemInfo[] {
-    return this.items
+    this.cart.reset();
+    this.list.uncheckAll();
+    this.concatValor('');
   }
 
   concatValor(v: string): void {
-    if (this.multi || v.length == 0) {
-      this.valor = '0'
-      this.nome = ''
+    if (this.multi || v.length === 0) {
+      this.valor = '0';
+      this.nome = '';
     }
-    this.multi = false
-    this.valor += v
-    this.valorReal = parseFloat(this.valor) / 100
+    this.multi = false;
+    this.valor += v;
+    this.valorReal = parseFloat(this.valor) / 100;
   }
 
   backspaceValor(): void {
-    this.multi = false
-    this.valor = this.valor.slice(0, -1)
-    if (this.valor.length == 0) this.valor = '0'
-    this.valorReal = parseFloat(this.valor) / 100
+    this.multi = false;
+    this.valor = this.valor.slice(0, -1);
+    if (this.valor.length === 0) this.valor = '0';
+    this.valorReal = parseFloat(this.valor) / 100;
   }
 
   checkItem(item: ItemTodo): void {
-    item.checked = true
-    this.concatValor('')
-    this.nome = item.nome
-  }
-
-  resetItemsTodo(): void {
-    this.itemsTodo = []    
-    this.sumItem()
-  }
-
-  uncheckItemsTodo(): void {
-    this.itemsTodo.forEach(i => i.checked = false)
-    this.sumItem()
-  }
-
-  removeItemTodo(index: number): void {    
-    this.itemsTodo.splice(index, 1)
-    this.sumItem()
+    this.list.check(item);
+    this.concatValor('');
+    this.nome = item.nome;
   }
 
   openDialog(): void {
@@ -140,9 +94,8 @@ export class AppComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.itemsTodo.unshift(new ItemTodo(result, false))
-        this.sumItem()
-        this.openDialog()
+        this.list.add(result);
+        this.openDialog();
       }
     });
   }
