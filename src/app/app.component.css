@@ -13,7 +13,8 @@ button {
 /* --- Toolbar --- */
 .toolbar-total {
   font-size: 1.25rem;
-  font-weight: 500;
+  font-weight: 600;
+  color: #fff;
 }
 
 /* --- Cart items --- */
@@ -29,18 +30,19 @@ button {
 
 .item-count {
   font-size: 0.75rem;
-  opacity: 0.6;
+  opacity: 0.55;
   margin-right: 4px;
 }
 
 .item-subtotal {
-  font-weight: 500;
+  font-weight: 600;
+  color: #E06010;
   margin-left: 4px;
 }
 
 .item-name {
   font-size: 0.85rem;
-  opacity: 0.75;
+  opacity: 0.65;
 }
 
 /* --- Empty states --- */
@@ -53,7 +55,7 @@ button {
   gap: 8px;
   padding: 40px 20px;
   text-align: center;
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .empty-cart mat-icon,
@@ -61,6 +63,7 @@ button {
   font-size: 48px;
   width: 48px;
   height: 48px;
+  color: #E06010;
 }
 
 .empty-cart p,
@@ -80,6 +83,7 @@ button {
   text-decoration: line-through;
   text-transform: lowercase;
   font-weight: normal;
+  opacity: 0.5;
 }
 
 .uncheckedClass {
@@ -113,32 +117,32 @@ button {
 
 /* --- Price display --- */
 .price-display {
-  padding: 8px 0 4px;
+  padding: 12px 8px 4px;
   gap: 2px;
-  transition: background-color 0.3s ease;
   border-radius: 8px;
   width: 100%;
 }
 
 .price-label {
-  font-size: 0.75rem;
-  opacity: 0.55;
+  font-size: 0.7rem;
+  opacity: 0.45;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
 }
 
 .price-value {
   margin: 0;
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 2.2rem;
+  font-weight: 700;
   letter-spacing: -0.02em;
+  color: #E06010;
 }
 
 .price-name {
   margin: 0 0 4px;
   font-size: 0.95rem;
   font-weight: 400;
-  opacity: 0.7;
+  opacity: 0.65;
 }
 
 .add-btn {
@@ -146,9 +150,10 @@ button {
   min-width: 140px;
 }
 
+/* --- Add item animation (orange flash) --- */
 @keyframes item-added-flash {
   0%   { background-color: transparent; }
-  30%  { background-color: rgba(76, 175, 80, 0.18); }
+  25%  { background-color: rgba(224, 96, 16, 0.20); }
   100% { background-color: transparent; }
 }
 

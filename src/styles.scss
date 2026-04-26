@@ -1,11 +1,15 @@
 @use '@angular/material' as mat;
 @import 'material-icons/iconfont/material-icons.css';
 
+// Colors extracted from image reference
+$brand-orange: #E06010;  // warm amber-orange (wall / ottomans)
+$dark-charcoal: #2D2D2D; // near-black (sofa)
+
 $mercapp-theme: mat.define-theme((
   color: (
-    theme-type: light,
-    primary: mat.$green-palette,
-    tertiary: mat.$orange-palette,
+    theme-type: dark,
+    primary: mat.$orange-palette,
+    tertiary: mat.$yellow-palette,
   ),
   typography: (
     brand-family: 'Roboto',
@@ -16,6 +20,17 @@ $mercapp-theme: mat.define-theme((
 
 html {
   @include mat.all-component-themes($mercapp-theme);
+  color-scheme: dark;
+
+  // Toolbar: orange brand color matching the wall in the image
+  --mat-toolbar-container-background-color: #{$brand-orange};
+  --mat-toolbar-container-text-color: #fff;
+
+  // Drawer: dark charcoal matching the sofa
+  --mat-sidenav-container-background-color: #{$dark-charcoal};
+
+  // Icon buttons inside toolbar inherit white
+  --mat-icon-button-icon-color: #fff;
 }
 
 html, body {
@@ -25,4 +40,13 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+// Ensure icon buttons in the orange toolbar are always white
+mat-toolbar button[mat-icon-button] {
+  color: #fff;
+}
+
+mat-toolbar .mat-mdc-icon-button .mat-icon {
+  color: #fff;
 }
