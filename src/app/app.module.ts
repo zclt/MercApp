@@ -10,7 +10,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
@@ -34,7 +33,6 @@ import { FormsModule } from '@angular/forms';
     MatListModule,
     MatToolbarModule,
     MatBadgeModule,
-    FlexLayoutModule,
     MatExpansionModule,
     MatSidenavModule,
     MatMenuModule,

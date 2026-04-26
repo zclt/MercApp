@@ -1,13 +1,13 @@
-<div fxLayout="column" fxLayoutAlign="start none" style="height: 100%;">
+<div class="flex-col" style="height: 100%;">
   <mat-drawer-container style="height: 100%;">
     <mat-drawer mode="over" #drawer style="width: 50%;">
-      <div fxLayout="column" fxLayoutAlign="start none" fxFlex>
+      <div class="flex-col flex-1">
         <button mat-raised-button (click)="openDialog()">Adicionar</button>
-        <div fxFlex="90">
-          <mat-card fxFlex style="overflow: auto;">
+        <div style="flex: 0 0 90%; min-height: 0;">
+          <mat-card class="flex-1" style="overflow: auto;">
             <mat-chip-set #chipList *ngFor="let item of itemsTodo;let i = index">
               <mat-chip (click)="checkItem(item);drawer.toggle()">
-                <span [ngClass]="item.checked ? 'checkedClass' : 'uncheckedClass'">{{ item.nome }}</span>                
+                <span [ngClass]="item.checked ? 'checkedClass' : 'uncheckedClass'">{{ item.nome }}</span>
               </mat-chip>
               <button mat-icon-button color="primary" (click)="removeItemTodo(i)">
                 <mat-icon>delete</mat-icon>
@@ -18,12 +18,12 @@
         <button mat-raised-button (click)="resetItemsTodo()">Limpar</button>
       </div>
     </mat-drawer>
-    <mat-drawer-content fxLayout="column" fxLayoutAlign="start none" style="height: 100%;">
+    <mat-drawer-content class="flex-col" style="height: 100%;">
       <mat-toolbar>
         <button mat-icon-button (click)="drawer.position='start';drawer.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
-        <span fxFlex>{{ sum | currency:'BRL':'' }}</span>
+        <span class="flex-1">{{ sum | currency:'BRL':'' }}</span>
         <span class="example-spacer"></span>
         <button mat-icon-button [matMenuTriggerFor]="menuGeral">
           <mat-icon matBadge="{{count}}" matBadgeOverlap="true">shopping_cart</mat-icon>
@@ -34,20 +34,20 @@
           </button>
         </mat-menu>
       </mat-toolbar>
-      <mat-card fxFlex style="overflow: auto;">
+      <mat-card class="flex-1" style="overflow: auto;">
         <div *ngFor="let item of items;let i = index">
-          <mat-card fxLayout="row" fxLayoutAlign="start center" fxFlex style="margin-bottom: 5px;">
-            <div fxFlex="80">
+          <mat-card class="flex-row-center" style="margin-bottom: 5px;">
+            <div style="flex: 0 0 80%;">
               <p><span style="font-size: 10px;">{{ item.count }} X</span> {{ item.valor | currency:'BRL':'' }} = {{ item.valor * item.count | currency:'BRL':'' }}</p>
               <div>{{ item.nome }}</div>
             </div>
-            <div fxLayout="row" fxLayoutAlign="end">
-                <button mat-icon-button color="basic" (click)="addCheckoutItem(item)">
-                  <mat-icon>add</mat-icon>
-                </button>
-                <button mat-icon-button color="basic" (click)="reduceCheckoutItem(item, i)">
-                  <mat-icon>remove</mat-icon>
-                </button>
+            <div class="flex-row-end">
+              <button mat-icon-button color="basic" (click)="addCheckoutItem(item)">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button color="basic" (click)="reduceCheckoutItem(item, i)">
+                <mat-icon>remove</mat-icon>
+              </button>
               <button mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
               </button>
@@ -64,11 +64,11 @@
         <mat-expansion-panel expanded="true">
           <mat-expansion-panel-header>
             <mat-panel-title>Digite o preço</mat-panel-title>
-            <mat-panel-description fxLayout="row" fxLayoutAlign="end">
+            <mat-panel-description class="flex-row-end">
               <mat-icon>pin</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <mat-card fxLayout="column" fxLayoutAlign="start center" style="height: 100%;">
+          <mat-card class="flex-col-center" style="height: 100%;">
             <div>
               <div>
                 <button mat-raised-button (click)="concatValor('1')">1</button>
@@ -93,7 +93,7 @@
                 <button mat-raised-button (click)="concatValor('')">C</button>
               </div>
             </div>
-            <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+            <div class="flex-col-center flex-1">
               <h1>{{ valorReal | currency:'BRL':'' }}</h1>
               <h2>{{ nome }}</h2>
               <button mat-raised-button color="primary" (click)="setCheckoutItem();" [disabled]="!(valorReal > 0)">
@@ -104,8 +104,8 @@
           </mat-card>
         </mat-expansion-panel>
       </mat-accordion>
-      <button mat-mini-fab id="todo-list" color="primary" (click)="drawer.position='end';drawer.toggle()">
-        <mat-icon>menu</mat-icon>
+      <button mat-mini-fab id="todo-list" color="primary" (click)="drawer.toggle()">
+        <mat-icon>list</mat-icon>
       </button>
     </mat-drawer-content>
   </mat-drawer-container>

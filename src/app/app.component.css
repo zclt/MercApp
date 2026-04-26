@@ -2,25 +2,36 @@ button {
   touch-action: manipulation;
 }
 
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex-row-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.flex-1 {
+  flex: 1;
+  min-height: 0;
+}
+
 .example-spacer {
   flex: 1 1 auto;
-}
-
-.example-container {
-  width: 500px;
-  height: 300px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-.example-sidenav-content {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
-.example-sidenav {
-  padding: 20px;
 }
 
 .checkedClass {
@@ -35,9 +46,9 @@ button {
 }
 
 #todo-list {
+  position: fixed;
   top: auto;
   right: 30px;
   bottom: 60px;
   left: auto;
-  position: fixed;
 }
