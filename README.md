@@ -64,22 +64,22 @@ O MercApp é um aplicativo web mobile-first para facilitar suas compras no merca
 <table>
   <tr>
     <td align="center" width="120">
-      <img src="https://via.placeholder.com/80x80/E06010/FFFFFF?text=+" width="80" height="80"/><br/>
+      <img src="https://placehold.co/80x80/E06010/FFFFFF?text=+" width="80" height="80"/><br/>
       <strong>#E06010</strong><br/>
       <sub>Laranja — primário</sub>
     </td>
     <td align="center" width="120">
-      <img src="https://via.placeholder.com/80x80/FFFFFF/E06010?text=+" width="80" height="80"/><br/>
+      <img src="https://placehold.co/80x80/FFFFFF/E06010?text=+" width="80" height="80"/><br/>
       <strong>#FFFFFF</strong><br/>
       <sub>Branco — fundo</sub>
     </td>
     <td align="center" width="120">
-      <img src="https://via.placeholder.com/80x80/212121/FFFFFF?text=+" width="80" height="80"/><br/>
+      <img src="https://placehold.co/80x80/212121/FFFFFF?text=+" width="80" height="80"/><br/>
       <strong>#212121</strong><br/>
       <sub>Escuro — texto</sub>
     </td>
     <td align="center" width="120">
-      <img src="https://via.placeholder.com/80x80/757575/FFFFFF?text=+" width="80" height="80"/><br/>
+      <img src="https://placehold.co/80x80/757575/FFFFFF?text=+" width="80" height="80"/><br/>
       <strong>#757575</strong><br/>
       <sub>Cinza — secundário</sub>
     </td>
