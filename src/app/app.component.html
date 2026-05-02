@@ -1,111 +1,133 @@
-<div fxLayout="column" fxLayoutAlign="start none" style="height: 100%;">
+<div class="flex-col" style="height: 100%;">
   <mat-drawer-container style="height: 100%;">
     <mat-drawer mode="over" #drawer style="width: 50%;">
-      <div fxLayout="column" fxLayoutAlign="start none" fxFlex>
+      <div class="flex-col flex-1">
         <button mat-raised-button (click)="openDialog()">Adicionar</button>
-        <div fxFlex="90">
-          <mat-card fxFlex style="overflow: auto;">
-            <mat-chip-set #chipList *ngFor="let item of itemsTodo;let i = index">
-              <mat-chip (click)="checkItem(item);drawer.toggle()">
-                <span [ngClass]="item.checked ? 'checkedClass' : 'uncheckedClass'">{{ item.nome }}</span>                
-              </mat-chip>
-              <button mat-icon-button color="primary" (click)="removeItemTodo(i)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </mat-chip-set>
+        <div style="flex: 0 0 90%; min-height: 0;">
+          <mat-card class="flex-1" style="overflow: auto;">
+            @for (item of list.items(); track $index; let i = $index) {
+              <mat-chip-set>
+                <mat-chip (click)="checkItem(item); drawer.toggle()">
+                  <span [ngClass]="item.checked ? 'checkedClass' : 'uncheckedClass'">{{ item.nome }}</span>
+                </mat-chip>
+                <button mat-icon-button color="primary" aria-label="Remover da lista" (click)="list.remove(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-chip-set>
+            } @empty {
+              <div class="empty-list">
+                <mat-icon>checklist</mat-icon>
+                <p>Lista vazia</p>
+                <span>Toque em <strong>Adicionar</strong> para criar itens</span>
+              </div>
+            }
           </mat-card>
         </div>
-        <button mat-raised-button (click)="resetItemsTodo()">Limpar</button>
+        <button mat-raised-button (click)="list.reset()">Limpar</button>
       </div>
     </mat-drawer>
-    <mat-drawer-content fxLayout="column" fxLayoutAlign="start none" style="height: 100%;">
+
+    <mat-drawer-content class="flex-col" style="height: 100%;">
       <mat-toolbar>
-        <button mat-icon-button (click)="drawer.position='start';drawer.toggle()">
+        <button mat-icon-button aria-label="Abrir lista de compras" (click)="drawer.position='start'; drawer.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
-        <span fxFlex>{{ sum | currency:'BRL':'' }}</span>
+        <span class="flex-1 toolbar-total">{{ cart.sum() | currency:'BRL':'' }}</span>
         <span class="example-spacer"></span>
-        <button mat-icon-button [matMenuTriggerFor]="menuGeral">
-          <mat-icon matBadge="{{count}}" matBadgeOverlap="true">shopping_cart</mat-icon>
+        <button mat-icon-button aria-label="Ver carrinho" [matMenuTriggerFor]="menuGeral">
+          <mat-icon [matBadge]="cart.count()" matBadgeOverlap="true">shopping_cart</mat-icon>
         </button>
         <mat-menu #menuGeral="matMenu">
-          <button mat-menu-item (click)="resetAll()" [disabled]="items.length==0">
+          <button mat-menu-item (click)="resetAll()" [disabled]="cart.items().length === 0">
             Esvaziar carrinho
           </button>
         </mat-menu>
       </mat-toolbar>
-      <mat-card fxFlex style="overflow: auto;">
-        <div *ngFor="let item of items;let i = index">
-          <mat-card fxLayout="row" fxLayoutAlign="start center" fxFlex style="margin-bottom: 5px;">
-            <div fxFlex="80">
-              <p><span style="font-size: 10px;">{{ item.count }} X</span> {{ item.valor | currency:'BRL':'' }} = {{ item.valor * item.count | currency:'BRL':'' }}</p>
-              <div>{{ item.nome }}</div>
+
+      <mat-card class="flex-1" style="overflow: auto;">
+        @for (item of cart.items(); track $index; let i = $index) {
+          <mat-card class="flex-row-center item-card">
+            <div style="flex: 0 0 80%;">
+              <p class="item-price">
+                <span class="item-count">{{ item.count }} ×</span>
+                {{ item.valor | currency:'BRL':'' }}
+                <span class="item-subtotal">= {{ item.valor * item.count | currency:'BRL':'' }}</span>
+              </p>
+              <div class="item-name">{{ item.nome }}</div>
             </div>
-            <div fxLayout="row" fxLayoutAlign="end">
-                <button mat-icon-button color="basic" (click)="addCheckoutItem(item)">
-                  <mat-icon>add</mat-icon>
-                </button>
-                <button mat-icon-button color="basic" (click)="reduceCheckoutItem(item, i)">
-                  <mat-icon>remove</mat-icon>
-                </button>
-              <button mat-icon-button [matMenuTriggerFor]="menu">
+            <div class="flex-row-end">
+              <button mat-icon-button aria-label="Adicionar unidade" (click)="cart.addCount(item)">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button aria-label="Remover unidade" (click)="cart.reduceCount(item, i)">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <button mat-icon-button aria-label="Mais opções" [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="removeCheckoutItem(i)">
-                  Excluir item
-                </button>
+                <button mat-menu-item (click)="removeCheckoutItem(i)">Excluir item</button>
               </mat-menu>
             </div>
           </mat-card>
-        </div>
+        } @empty {
+          <div class="empty-cart">
+            <mat-icon>shopping_cart</mat-icon>
+            <p>Carrinho vazio</p>
+            <span>Digite um preço e toque em <strong>Adicionar</strong></span>
+          </div>
+        }
       </mat-card>
+
       <mat-accordion multi>
         <mat-expansion-panel expanded="true">
           <mat-expansion-panel-header>
             <mat-panel-title>Digite o preço</mat-panel-title>
-            <mat-panel-description fxLayout="row" fxLayoutAlign="end">
+            <mat-panel-description class="flex-row-end">
               <mat-icon>pin</mat-icon>
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <mat-card fxLayout="column" fxLayoutAlign="start center" style="height: 100%;">
-            <div>
-              <div>
+          <mat-card class="flex-col-center keypad-card">
+            <div class="keypad">
+              <div class="keypad-row">
                 <button mat-raised-button (click)="concatValor('1')">1</button>
                 <button mat-raised-button (click)="concatValor('2')">2</button>
                 <button mat-raised-button (click)="concatValor('3')">3</button>
               </div>
-              <div>
+              <div class="keypad-row">
                 <button mat-raised-button (click)="concatValor('4')">4</button>
                 <button mat-raised-button (click)="concatValor('5')">5</button>
                 <button mat-raised-button (click)="concatValor('6')">6</button>
               </div>
-              <div>
+              <div class="keypad-row">
                 <button mat-raised-button (click)="concatValor('7')">7</button>
                 <button mat-raised-button (click)="concatValor('8')">8</button>
                 <button mat-raised-button (click)="concatValor('9')">9</button>
               </div>
-              <div>
-                <button mat-raised-button (click)="backspaceValor()">
+              <div class="keypad-row">
+                <button mat-raised-button aria-label="Apagar último dígito" (click)="backspaceValor()">
                   <mat-icon>backspace</mat-icon>
                 </button>
                 <button mat-raised-button (click)="concatValor('0')">0</button>
                 <button mat-raised-button (click)="concatValor('')">C</button>
               </div>
             </div>
-            <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
-              <h1>{{ valorReal | currency:'BRL':'' }}</h1>
-              <h2>{{ nome }}</h2>
-              <button mat-raised-button color="primary" (click)="setCheckoutItem();" [disabled]="!(valorReal > 0)">
-                <mat-icon *ngIf="multi">autorenew</mat-icon>
-                Adicionar
+            <div class="flex-col-center flex-1 price-display" [class.item-added]="itemAdded">
+              <span class="price-label">Preço do item</span>
+              <h1 class="price-value">{{ valorReal | currency:'BRL':'' }}</h1>
+              @if (nome) { <h2 class="price-name">{{ nome }}</h2> }
+              <button mat-raised-button color="primary" class="add-btn"
+                (click)="setCheckoutItem()" [disabled]="!(valorReal > 0)">
+                @if (multi) { <mat-icon>add_circle</mat-icon> } @else { <mat-icon>add_shopping_cart</mat-icon> }
+                {{ multi ? 'Mais um' : 'Adicionar' }}
               </button>
             </div>
           </mat-card>
         </mat-expansion-panel>
       </mat-accordion>
-      <button mat-mini-fab id="todo-list" color="primary" (click)="drawer.position='end';drawer.toggle()">
-        <mat-icon>menu</mat-icon>
+
+      <button mat-mini-fab id="todo-list" color="primary" aria-label="Lista de compras" (click)="drawer.toggle()">
+        <mat-icon>list</mat-icon>
       </button>
     </mat-drawer-content>
   </mat-drawer-container>
