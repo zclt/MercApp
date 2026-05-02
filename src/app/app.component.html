@@ -6,14 +6,12 @@
         <div style="flex: 0 0 90%; min-height: 0;">
           <mat-card class="flex-1" style="overflow: auto;">
             @for (item of list.items(); track $index; let i = $index) {
-              <mat-chip-set>
-                <mat-chip (click)="checkItem(item); drawer.toggle()">
-                  <span [ngClass]="item.checked ? 'checkedClass' : 'uncheckedClass'">{{ item.nome }}</span>
-                </mat-chip>
-                <button mat-icon-button color="primary" aria-label="Remover da lista" (click)="list.remove(i)">
+              <mat-card class="flex-row-center item-card" (click)="checkItem(item); drawer.toggle()">
+                <span class="flex-1" [ngClass]="item.checked ? 'checkedClass' : 'uncheckedClass'">{{ item.nome }}</span>
+                <button mat-icon-button color="primary" aria-label="Remover da lista" (click)="$event.stopPropagation(); list.remove(i)">
                   <mat-icon>delete</mat-icon>
                 </button>
-              </mat-chip-set>
+              </mat-card>
             } @empty {
               <div class="empty-list">
                 <mat-icon>checklist</mat-icon>

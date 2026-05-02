@@ -52,10 +52,15 @@ export class AppComponent {
   valorReal = 0;
   multi = false;
   itemAdded = false;
+  private selectedItem: ItemTodo | null = null;
 
   setCheckoutItem(): void {
     if (!(this.valorReal > 0)) return;
     this.cart.addOrIncrement(this.valorReal, this.nome, this.multi);
+    if (this.selectedItem) {
+      this.list.check(this.selectedItem);
+      this.selectedItem = null;
+    }
     this.multi = true;
     this.itemAdded = true;
     setTimeout(() => { this.itemAdded = false; this.cdr.markForCheck(); }, 400);
@@ -84,6 +89,7 @@ export class AppComponent {
     if (this.multi || v.length === 0) {
       this.valor = '0';
       this.nome = '';
+      if (v.length === 0) this.selectedItem = null;
     }
     this.multi = false;
     this.valor += v;
@@ -98,8 +104,8 @@ export class AppComponent {
   }
 
   checkItem(item: ItemTodo): void {
-    this.list.check(item);
     this.concatValor('');
+    this.selectedItem = item;
     this.nome = item.nome;
   }
 
