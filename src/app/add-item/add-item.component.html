@@ -1,10 +1,18 @@
 <div mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>Produto</mat-label>
-    <input matInput 
-      [(ngModel)]="data.nome" 
-      cdkFocusInitial 
+    <input matInput
+      [(ngModel)]="data.nome"
+      cdkFocusInitial
       (keydown.enter)="confirmar()">
+    @if (voice.supported) {
+      <button matSuffix mat-icon-button type="button"
+        [class.mic-active]="voice.isListening()"
+        (click)="startVoice()"
+        aria-label="Comando de voz">
+        <mat-icon>{{ voice.isListening() ? 'mic_off' : 'mic' }}</mat-icon>
+      </button>
+    }
   </mat-form-field>
 </div>
 <div mat-dialog-actions>

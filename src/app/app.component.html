@@ -114,11 +114,19 @@
               <span class="price-label">Preço do item</span>
               <h1 class="price-value">{{ valorReal | currency:'BRL':'' }}</h1>
               @if (nome) { <h2 class="price-name">{{ nome }}</h2> }
-              <button mat-raised-button color="primary" class="add-btn"
-                (click)="setCheckoutItem()" [disabled]="!(valorReal > 0)">
-                @if (multi) { <mat-icon>add_circle</mat-icon> } @else { <mat-icon>add_shopping_cart</mat-icon> }
-                {{ multi ? 'Mais um' : 'Adicionar' }}
-              </button>
+              <div class="add-btn-row">
+                <button mat-raised-button color="primary" class="add-btn"
+                  (click)="setCheckoutItem()" [disabled]="!(valorReal > 0)">
+                  @if (multi) { <mat-icon>add_circle</mat-icon> } @else { <mat-icon>add_shopping_cart</mat-icon> }
+                  {{ multi ? 'Mais um' : 'Adicionar' }}
+                </button>
+                @if (voice.supported) {
+                  <button mat-icon-button class="mic-btn" [class.mic-active]="voice.isListening()"
+                    (click)="startVoiceCalculator()" aria-label="Comando de voz">
+                    <mat-icon>{{ voice.isListening() ? 'mic_off' : 'mic' }}</mat-icon>
+                  </button>
+                }
+              </div>
             </div>
           </mat-card>
         </mat-expansion-panel>
