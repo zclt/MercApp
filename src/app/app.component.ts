@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartService } from './cart.service';
 import { ShoppingListService } from './shopping-list.service';
+import { VoiceService } from './voice.service';
 import { AddItemComponent } from './add-item/add-item.component';
 import { ItemTodo } from './model/item-todo';
 
@@ -43,6 +44,7 @@ import { ItemTodo } from './model/item-todo';
 export class AppComponent {
   protected readonly cart = inject(CartService);
   protected readonly list = inject(ShoppingListService);
+  protected readonly voice = inject(VoiceService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -107,6 +109,42 @@ export class AppComponent {
     this.concatValor('');
     this.selectedItem = item;
     this.nome = item.nome;
+  }
+
+  startVoiceCalculator(): void {
+    if (this.voice.isListening()) {
+      this.voice.stop();
+      return;
+    }
+    this.voice.listen().subscribe(text => {
+      const parsed = this.parsePriceFromSpeech(text);
+      if (parsed) {
+        this.multi = false;
+        this.valor = parsed;
+        this.valorReal = parseFloat(parsed) / 100;
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  private parsePriceFromSpeech(text: string): string | null {
+    const clean = text.toLowerCase()
+      .replace(/reais?/g, '')
+      .replace(/centavos?/g, '')
+      .replace(/\be\b/g, ',')
+      .replace(/\s+/g, '');
+
+    const decMatch = clean.match(/(\d+)[,.](\d{1,2})/);
+    if (decMatch) {
+      return `${decMatch[1]}${decMatch[2].padEnd(2, '0')}`;
+    }
+
+    const intMatch = clean.match(/^(\d+)$/);
+    if (intMatch) {
+      return `${intMatch[1]}00`;
+    }
+
+    return null;
   }
 
   openDialog(): void {
