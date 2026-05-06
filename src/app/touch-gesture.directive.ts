@@ -6,22 +6,22 @@ import {
 @Directive({ selector: '[appTouchGesture]', standalone: true })
 export class TouchGestureDirective implements OnInit, OnDestroy {
   @Output() swipeRight = new EventEmitter<void>();
-  @Output() swipeLeft  = new EventEmitter<void>();
-  @Output() longPress  = new EventEmitter<void>();
+  @Output() swipeLeft = new EventEmitter<void>();
+  @Output() longPress = new EventEmitter<void>();
 
   private startX = 0;
   private startY = 0;
-  private active      = false;
-  private horizontal  = false;
+  private active = false;
+  private horizontal = false;
   private longPressTimer: ReturnType<typeof setTimeout> | null = null;
 
   private readonly SWIPE_THRESHOLD = 50;
-  private readonly LOCK_DISTANCE   = 8;
-  private readonly LONG_PRESS_MS   = 3000;
+  private readonly LOCK_DISTANCE = 8;
+  private readonly LONG_PRESS_MS = 2000;
 
   private readonly boundTouchMove: (e: TouchEvent) => void;
   private readonly boundMouseMove: (e: MouseEvent) => void;
-  private readonly boundMouseUp:   (e: MouseEvent) => void;
+  private readonly boundMouseUp: (e: MouseEvent) => void;
 
   constructor(
     private readonly el: ElementRef<HTMLElement>,
@@ -29,7 +29,7 @@ export class TouchGestureDirective implements OnInit, OnDestroy {
   ) {
     this.boundTouchMove = this.handleTouchMove.bind(this);
     this.boundMouseMove = this.handleMouseMove.bind(this);
-    this.boundMouseUp   = this.handleMouseUp.bind(this);
+    this.boundMouseUp = this.handleMouseUp.bind(this);
   }
 
   ngOnInit(): void {
@@ -67,7 +67,7 @@ export class TouchGestureDirective implements OnInit, OnDestroy {
     this.begin(e.clientX, e.clientY);
     this.ngZone.runOutsideAngular(() => {
       document.addEventListener('mousemove', this.boundMouseMove);
-      document.addEventListener('mouseup',   this.boundMouseUp);
+      document.addEventListener('mouseup', this.boundMouseUp);
     });
   }
 
@@ -77,16 +77,16 @@ export class TouchGestureDirective implements OnInit, OnDestroy {
 
   private handleMouseUp(e: MouseEvent): void {
     document.removeEventListener('mousemove', this.boundMouseMove);
-    document.removeEventListener('mouseup',   this.boundMouseUp);
+    document.removeEventListener('mouseup', this.boundMouseUp);
     this.ngZone.run(() => this.end(e.clientX));
   }
 
   // ── Lógica central ────────────────────────────────────────────────────
 
   private begin(x: number, y: number): void {
-    this.startX    = x;
-    this.startY    = y;
-    this.active    = true;
+    this.startX = x;
+    this.startY = y;
+    this.active = true;
     this.horizontal = false;
 
     const el = this.el.nativeElement;
@@ -123,8 +123,8 @@ export class TouchGestureDirective implements OnInit, OnDestroy {
       e?.preventDefault();
       const el = this.el.nativeElement;
       el.style.transform = `translateX(${dx}px)`;
-      el.classList.toggle('swipe-right-hint', dx >  this.SWIPE_THRESHOLD);
-      el.classList.toggle('swipe-left-hint',  dx < -this.SWIPE_THRESHOLD);
+      el.classList.toggle('swipe-right-hint', dx > this.SWIPE_THRESHOLD);
+      el.classList.toggle('swipe-left-hint', dx < -this.SWIPE_THRESHOLD);
     }
   }
 
@@ -134,26 +134,26 @@ export class TouchGestureDirective implements OnInit, OnDestroy {
 
     const dx = endX - this.startX;
     this.resetEl();
-    this.active     = false;
+    this.active = false;
     this.horizontal = false;
 
     if (Math.abs(dx) > this.SWIPE_THRESHOLD) {
       if (dx > 0) this.swipeRight.emit();
-      else        this.swipeLeft.emit();
+      else this.swipeLeft.emit();
     }
   }
 
   private cancel(): void {
     this.cancelLongPress();
     this.resetEl();
-    this.active     = false;
+    this.active = false;
     this.horizontal = false;
   }
 
   private resetEl(): void {
     const el = this.el.nativeElement;
     el.style.transition = 'transform 0.25s ease-out';
-    el.style.transform  = 'translateX(0)';
+    el.style.transform = 'translateX(0)';
     el.classList.remove('swipe-right-hint', 'swipe-left-hint', 'gesture-active', 'long-pressing');
     setTimeout(() => { el.style.transition = ''; }, 250);
   }
@@ -170,6 +170,6 @@ export class TouchGestureDirective implements OnInit, OnDestroy {
     this.cancelLongPress();
     this.el.nativeElement.removeEventListener('touchmove', this.boundTouchMove);
     document.removeEventListener('mousemove', this.boundMouseMove);
-    document.removeEventListener('mouseup',   this.boundMouseUp);
+    document.removeEventListener('mouseup', this.boundMouseUp);
   }
 }

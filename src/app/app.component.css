@@ -45,7 +45,7 @@ button {
 }
 
 .item-card.long-pressing::after {
-  animation: long-press-fill 3s linear forwards;
+  animation: long-press-fill 2s linear forwards;
 }
 
 @keyframes long-press-fill {
