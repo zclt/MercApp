@@ -3,12 +3,37 @@ button {
 }
 
 /* --- Layout --- */
-.flex-col        { display: flex; flex-direction: column; }
-.flex-col-center { display: flex; flex-direction: column; align-items: center; }
-.flex-row-center { display: flex; flex-direction: row; align-items: center; }
-.flex-row-end    { display: flex; flex-direction: row; justify-content: flex-end; }
-.flex-1          { flex: 1; min-height: 0; }
-.example-spacer  { flex: 1 1 auto; }
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex-row-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.flex-1 {
+  flex: 1;
+  min-height: 0;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
 
 /* --- Toolbar --- */
 .toolbar-total {
@@ -20,7 +45,10 @@ button {
 /* --- Cart items --- */
 .item-card {
   margin-bottom: 8px;
-  padding: 8px 4px 8px 4px;
+  padding: 0 4px;
+  height: 48px;
+  box-sizing: border-box;
+  flex-shrink: 0;
   position: relative;
   overflow: hidden;
   user-select: none;
@@ -49,8 +77,13 @@ button {
 }
 
 @keyframes long-press-fill {
-  from { width: 0%; }
-  to   { width: 100%; }
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
 }
 
 .item-card.swipe-right-hint {
@@ -235,15 +268,30 @@ button {
 }
 
 @keyframes mic-pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.35; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
 }
 
 /* --- Add item animation (orange flash) --- */
 @keyframes item-added-flash {
-  0%   { background-color: transparent; }
-  25%  { background-color: rgba(224, 96, 16, 0.20); }
-  100% { background-color: transparent; }
+  0% {
+    background-color: transparent;
+  }
+
+  25% {
+    background-color: rgba(224, 96, 16, 0.20);
+  }
+
+  100% {
+    background-color: transparent;
+  }
 }
 
 .item-added {
