@@ -44,29 +44,21 @@
 
       <mat-card class="flex-1" style="overflow: auto;">
         @for (item of cart.items(); track $index; let i = $index) {
-          <mat-card class="flex-row-center item-card">
-            <div style="flex: 0 0 80%;">
+          <mat-card class="flex-row-center item-card"
+            appTouchGesture
+            (swipeRight)="cart.addCount(item)"
+            (swipeLeft)="cart.reduceCount(item, i)"
+            (longPress)="removeCheckoutItem(i)">
+            <mat-icon class="swipe-arrow arrow-left">chevron_left</mat-icon>
+            <div class="item-info">
               <p class="item-price">
-                <span class="item-count">{{ item.count }} ×</span>
+                <span class="item-count">{{ item.count }}×</span>
                 {{ item.valor | currency:'BRL':'' }}
                 <span class="item-subtotal">= {{ item.valor * item.count | currency:'BRL':'' }}</span>
               </p>
               <div class="item-name">{{ item.nome }}</div>
             </div>
-            <div class="flex-row-end">
-              <button mat-icon-button aria-label="Adicionar unidade" (click)="cart.addCount(item)">
-                <mat-icon>add</mat-icon>
-              </button>
-              <button mat-icon-button aria-label="Remover unidade" (click)="cart.reduceCount(item, i)">
-                <mat-icon>remove</mat-icon>
-              </button>
-              <button mat-icon-button aria-label="Mais opções" [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="removeCheckoutItem(i)">Excluir item</button>
-              </mat-menu>
-            </div>
+            <mat-icon class="swipe-arrow arrow-right">chevron_right</mat-icon>
           </mat-card>
         } @empty {
           <div class="empty-cart">

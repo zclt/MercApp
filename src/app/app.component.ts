@@ -16,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartService } from './cart.service';
 import { ShoppingListService } from './shopping-list.service';
 import { VoiceService } from './voice.service';
+import { TouchGestureDirective } from './touch-gesture.directive';
 import { AddItemComponent } from './add-item/add-item.component';
 import { ItemTodo } from './model/item-todo';
 
@@ -39,6 +40,7 @@ import { ItemTodo } from './model/item-todo';
     MatChipsModule,
     MatDialogModule,
     MatSnackBarModule,
+    TouchGestureDirective,
   ],
 })
 export class AppComponent {
