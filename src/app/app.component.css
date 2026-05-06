@@ -119,6 +119,14 @@ button {
   opacity: 1;
 }
 
+.item-photo {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
 .item-info {
   flex: 1;
   min-width: 0;

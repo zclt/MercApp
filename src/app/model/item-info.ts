@@ -1,3 +1,8 @@
 export class ItemInfo {
-    constructor(public valor: number,public count: number, public nome: string){}
+  constructor(
+    public valor: number,
+    public count: number,
+    public nome: string,
+    public photo?: string,
+  ) {}
 }

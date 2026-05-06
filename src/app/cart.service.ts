@@ -43,6 +43,10 @@ export class CartService {
     }
   }
 
+  setPhoto(item: ItemInfo, photo: string): void {
+    this.items.update(items => { item.photo = photo; return [...items]; });
+  }
+
   remove(index: number): void {
     this.items.update(items => items.filter((_, i) => i !== index));
   }
