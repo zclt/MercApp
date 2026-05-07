@@ -3,12 +3,37 @@ button {
 }
 
 /* --- Layout --- */
-.flex-col        { display: flex; flex-direction: column; }
-.flex-col-center { display: flex; flex-direction: column; align-items: center; }
-.flex-row-center { display: flex; flex-direction: row; align-items: center; }
-.flex-row-end    { display: flex; flex-direction: row; justify-content: flex-end; }
-.flex-1          { flex: 1; min-height: 0; }
-.example-spacer  { flex: 1 1 auto; }
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-col-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex-row-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.flex-1 {
+  flex: 1;
+  min-height: 0;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
 
 /* --- Toolbar --- */
 .toolbar-total {
@@ -20,7 +45,83 @@ button {
 /* --- Cart items --- */
 .item-card {
   margin-bottom: 8px;
-  padding: 8px 4px 8px 12px;
+  padding: 0 4px;
+  height: 48px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  will-change: transform;
+  touch-action: pan-y;
+  cursor: grab;
+  gap: 4px;
+}
+
+.item-card.gesture-active {
+  cursor: grabbing;
+}
+
+.item-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background-color: #d32f2f;
+}
+
+.item-card.long-pressing::after {
+  animation: long-press-fill 2s linear forwards;
+}
+
+@keyframes long-press-fill {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+.item-card.swipe-right-hint {
+  background-color: rgba(56, 142, 60, 0.15);
+}
+
+.item-card.swipe-left-hint {
+  background-color: rgba(211, 47, 47, 0.12);
+}
+
+/* --- Swipe arrows --- */
+.swipe-arrow {
+  opacity: 0.18;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+  color: #E06010;
+  transition: opacity 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.item-card.gesture-active .swipe-arrow {
+  opacity: 0.7;
+}
+
+.item-card.swipe-right-hint .arrow-right {
+  color: #43a047;
+  opacity: 1;
+}
+
+.item-card.swipe-left-hint .arrow-left {
+  color: #e53935;
+  opacity: 1;
+}
+
+.item-info {
+  flex: 1;
+  min-width: 0;
 }
 
 .item-price {
@@ -44,6 +145,7 @@ button {
   font-size: 0.85rem;
   opacity: 0.65;
 }
+
 
 /* --- Empty states --- */
 .empty-cart,
@@ -166,15 +268,30 @@ button {
 }
 
 @keyframes mic-pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.35; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
 }
 
 /* --- Add item animation (orange flash) --- */
 @keyframes item-added-flash {
-  0%   { background-color: transparent; }
-  25%  { background-color: rgba(224, 96, 16, 0.20); }
-  100% { background-color: transparent; }
+  0% {
+    background-color: transparent;
+  }
+
+  25% {
+    background-color: rgba(224, 96, 16, 0.20);
+  }
+
+  100% {
+    background-color: transparent;
+  }
 }
 
 .item-added {
