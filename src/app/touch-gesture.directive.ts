@@ -8,16 +8,19 @@ export class TouchGestureDirective implements OnInit, OnDestroy {
   @Output() swipeRight = new EventEmitter<void>();
   @Output() swipeLeft = new EventEmitter<void>();
   @Output() longPress = new EventEmitter<void>();
+  @Output() doubleTap = new EventEmitter<void>();
 
   private startX = 0;
   private startY = 0;
   private active = false;
   private horizontal = false;
   private longPressTimer: ReturnType<typeof setTimeout> | null = null;
+  private lastTapTime = 0;
 
   private readonly SWIPE_THRESHOLD = 50;
   private readonly LOCK_DISTANCE = 8;
   private readonly LONG_PRESS_MS = 2000;
+  private readonly DOUBLE_TAP_MS = 300;
 
   private readonly boundTouchMove: (e: TouchEvent) => void;
   private readonly boundMouseMove: (e: MouseEvent) => void;
@@ -54,7 +57,26 @@ export class TouchGestureDirective implements OnInit, OnDestroy {
 
   @HostListener('touchend', ['$event'])
   onTouchEnd(e: TouchEvent): void {
+    this.cancelLongPress();
+
+    if (!this.horizontal) {
+      const now = Date.now();
+      if (this.lastTapTime > 0 && now - this.lastTapTime < this.DOUBLE_TAP_MS) {
+        this.lastTapTime = 0;
+        this.resetEl();
+        this.active = false;
+        this.doubleTap.emit();
+        return;
+      }
+      this.lastTapTime = now;
+    }
+
     this.end(e.changedTouches[0].clientX);
+  }
+
+  @HostListener('dblclick')
+  onDblClick(): void {
+    this.doubleTap.emit();
   }
 
   @HostListener('touchcancel')

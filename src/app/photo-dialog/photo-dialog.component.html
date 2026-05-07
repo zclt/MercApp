@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>{{ data.photo ? 'Alterar foto' : 'Foto do produto' }}</h2>
+
+<mat-dialog-content>
+  @if (!capturedPhoto) {
+    <div class="camera-wrap">
+      <video #video autoplay playsinline class="camera-video"></video>
+      @if (cameraError) {
+        <div class="camera-error">
+          <mat-icon>videocam_off</mat-icon>
+          <p>Câmera não disponível</p>
+        </div>
+      }
+    </div>
+  } @else {
+    <img [src]="capturedPhoto" class="photo-preview" alt="Foto capturada">
+  }
+  <canvas #canvas style="display:none"></canvas>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  @if (!capturedPhoto) {
+    <button mat-button (click)="dismiss()">Cancelar</button>
+    <button mat-raised-button color="primary" (click)="capture()" [disabled]="!streaming">
+      <mat-icon>camera_alt</mat-icon> Tirar foto
+    </button>
+  } @else {
+    <button mat-button (click)="retake()">
+      <mat-icon>refresh</mat-icon> Repetir
+    </button>
+    <button mat-raised-button color="primary" (click)="save()">
+      <mat-icon>check</mat-icon> Usar foto
+    </button>
+  }
+</mat-dialog-actions>

@@ -48,7 +48,8 @@
             appTouchGesture
             (swipeRight)="cart.addCount(item)"
             (swipeLeft)="cart.reduceCount(item, i)"
-            (longPress)="removeCheckoutItem(i)">
+            (longPress)="removeCheckoutItem(i)"
+            (doubleTap)="openPhotoDialog(item)">
             <mat-icon class="swipe-arrow arrow-left">chevron_left</mat-icon>
             <div class="item-info">
               <p class="item-price">
@@ -58,6 +59,9 @@
               </p>
               <div class="item-name">{{ item.nome }}</div>
             </div>
+            @if (item.photo) {
+              <img class="item-photo" [src]="item.photo" alt="">
+            }
             <mat-icon class="swipe-arrow arrow-right">chevron_right</mat-icon>
           </mat-card>
         } @empty {

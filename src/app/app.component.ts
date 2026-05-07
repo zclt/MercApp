@@ -18,7 +18,9 @@ import { ShoppingListService } from './shopping-list.service';
 import { VoiceService } from './voice.service';
 import { TouchGestureDirective } from './touch-gesture.directive';
 import { AddItemComponent } from './add-item/add-item.component';
+import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
 import { ItemTodo } from './model/item-todo';
+import { ItemInfo } from './model/item-info';
 
 @Component({
   selector: 'app-root',
@@ -147,6 +149,21 @@ export class AppComponent {
     }
 
     return null;
+  }
+
+  openPhotoDialog(item: ItemInfo): void {
+    const dialogRef = this.dialog.open(PhotoDialogComponent, {
+      data: { photo: item.photo },
+      width: '90vw',
+      maxWidth: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((photo: string | undefined) => {
+      if (photo !== undefined) {
+        this.cart.setPhoto(item, photo);
+        this.cdr.markForCheck();
+      }
+    });
   }
 
   openDialog(): void {
