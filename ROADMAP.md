@@ -8,9 +8,9 @@ Este documento detalha as visões futuras e melhorias planejadas para o MercApp.
 
 A conectividade dentro de supermercados muitas vezes é instável ou inexistente. Garantir que o aplicativo funcione sem internet é crucial.
 
-- [ ] **Instalação Local:** Transformar o app em um PWA instalável via navegador (Adicionar à Tela Inicial).
-- [ ] **Cache Dinâmico:** Implementar Service Workers (`@angular/pwa`) para cache da interface e assets essenciais.
-- [ ] **Sincronização Offline:** Permitir adicionar itens e fechar compras offline, sincronizando com o backend quando a conexão retornar.
+- [x] **Instalação Local:** Transformar o app em um PWA instalável via navegador (Adicionar à Tela Inicial).
+- [x] **Cache Dinâmico:** Implementar Service Workers (`@angular/pwa`) para cache da interface e assets essenciais.
+- [x] **Sincronização Offline:** Dados persistidos em `localStorage`; app funciona 100% offline — itens e carrinho são mantidos entre sessões sem depender de backend.
 
 > [!IMPORTANT]
 > A experiência de uso sem internet deve ser fluida e sem erros aparentes para o usuário.

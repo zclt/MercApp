@@ -16,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CartService } from './cart.service';
 import { ShoppingListService } from './shopping-list.service';
 import { VoiceService } from './voice.service';
+import { PwaUpdateService } from './pwa-update.service';
 import { TouchGestureDirective } from './touch-gesture.directive';
 import { AddItemComponent } from './add-item/add-item.component';
 import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
@@ -52,6 +53,11 @@ export class AppComponent {
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly pwaUpdate = inject(PwaUpdateService);
+
+  constructor() {
+    this.pwaUpdate.init();
+  }
 
   nome = '';
   valor = '0';
