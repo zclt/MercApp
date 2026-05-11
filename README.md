@@ -23,10 +23,15 @@ O MercApp é um aplicativo web mobile-first para facilitar suas compras no merca
 
 | | Recurso | Descrição |
 |---|---|---|
+| | Recurso | Descrição |
+|---|---|---|
 | 📋 | **Lista de compras** | Crie sua lista antes de ir ao mercado |
 | 🧮 | **Teclado numérico** | Digite preços com precisão de centavos |
 | 🛒 | **Carrinho inteligente** | Soma automática com quantidade por item |
 | ✅ | **Marcação de itens** | Toque no item da lista para preencher o preço automaticamente |
+| 👆 | **Gestos no carrinho** | Swipe →/← para aumentar/reduzir quantidade; pressão longa para remover |
+| 📸 | **Foto do item** | Duplo toque no item do carrinho para registrar a foto do produto |
+| 🎙️ | **Comando de voz** | Dite o preço em português (ex: "cinco reais e noventa") |
 | ↩️ | **Desfazer** | Esvazie o carrinho com opção de desfazer a ação |
 | 📱 | **Mobile-first** | Interface otimizada para uso na palma da mão |
 
@@ -40,11 +45,16 @@ O MercApp é um aplicativo web mobile-first para facilitar suas compras no merca
 2. No mercado     →  Toque em um item da lista para selecioná-lo
 
 3. Digite o preço →  Use o teclado numérico (ex: 5, 9, 0 = R$ 5,90)
+                     Ou toque no microfone e dite o valor em português
 
 4. Adicionar      →  Toque em "Adicionar" — o item vai pro carrinho e
                      é marcado como comprado na lista
 
-5. Total          →  Acompanhe o valor total em tempo real na barra superior
+5. No carrinho    →  Swipe → para +1 unidade  |  Swipe ← para -1 unidade
+                     Pressão longa (2s) remove o item
+                     Duplo toque abre o registro de foto do produto
+
+6. Total          →  Acompanhe o valor total em tempo real na barra superior
 ```
 
 ---
@@ -112,17 +122,43 @@ npm start
 # Acesse http://localhost:4200
 ```
 
+## Testes E2E
+
+Os testes end-to-end usam [Playwright](https://playwright.dev) e gravam vídeo de cada interação.
+
+```bash
+# Roda os testes com browser visível (slowMo 1,5s por ação)
+npm run test:e2e:headed
+
+# Roda headless (mais rápido, vídeos ainda são gravados)
+npm run test:e2e
+
+# Abre a UI interativa do Playwright
+npm run test:e2e:ui
+
+# Exibe o relatório HTML gerado
+npx playwright show-report
+```
+
+Os vídeos ficam em `test-results/<nome-do-teste>/video.webm` e o relatório HTML em `playwright-report/`.
+
+---
+
+## Testes unitários
+
+```bash
+npm test
+```
+
+Executa os testes Karma/Jasmine e exibe o relatório de cobertura no browser.
+
 ## Build para produção
 
 ```bash
-# Build padrão
 npm run build
-
-# Build para GitHub Pages (base-href correto)
-npm run github-docs
 ```
 
-Os arquivos de produção são gerados na pasta `docs/`, que é servida pelo GitHub Pages.
+O build já inclui o `--base-href` correto para o GitHub Pages. Os arquivos são gerados na pasta `docs/`, servida diretamente pelo GitHub Pages.
 
 ---
 
