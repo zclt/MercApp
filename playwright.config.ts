@@ -9,7 +9,10 @@ export default defineConfig({
     baseURL: 'http://localhost:4200',
     video: 'on',
     screenshot: 'only-on-failure',
-    viewport: { width: 390, height: 844 }, // iPhone 14 size (app is mobile-first)
+    viewport: { width: 390, height: 844 },
+    launchOptions: {
+      slowMo: 1500,
+    },
   },
   projects: [
     {
