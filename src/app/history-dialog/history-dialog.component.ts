@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,5 +25,19 @@ export class HistoryDialogComponent {
   protected barHeight(total: number): number {
     const max = this.maxWeekly();
     return max > 0 ? Math.round((total / max) * 100) : 0;
+  }
+
+  private readonly expanded = signal(new Set<string>());
+
+  protected isExpanded(date: string): boolean {
+    return this.expanded().has(date);
+  }
+
+  protected toggleSession(date: string): void {
+    this.expanded.update(set => {
+      const next = new Set(set);
+      if (next.has(date)) next.delete(date); else next.add(date);
+      return next;
+    });
   }
 }

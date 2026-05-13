@@ -33,7 +33,7 @@
   } @else {
     @for (session of sessions(); track session.date) {
       <mat-card class="session-card">
-        <div class="session-header">
+        <div class="session-header" (click)="toggleSession(session.date)">
           <div>
             <div class="session-date">{{ session.date | date:'dd/MM/yyyy' }}</div>
             <div class="session-meta">
@@ -41,13 +41,18 @@
               {{ session.items.length }} {{ session.items.length === 1 ? 'item' : 'itens' }}
             </div>
           </div>
-          <div class="session-total">{{ session.total | currency:'BRL':'' }}</div>
+          <div class="session-right">
+            <span class="session-total">{{ session.total | currency:'BRL':'' }}</span>
+            <mat-icon class="expand-icon" [class.expand-icon-open]="isExpanded(session.date)">expand_more</mat-icon>
+          </div>
         </div>
-        <div class="session-items">
-          @for (item of session.items; track $index) {
-            <span class="session-item">{{ item.nome }}</span>
-          }
-        </div>
+        @if (isExpanded(session.date)) {
+          <div class="session-items">
+            @for (item of session.items; track $index) {
+              <span class="session-item">{{ item.nome }}</span>
+            }
+          </div>
+        }
       </mat-card>
     }
   }
