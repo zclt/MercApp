@@ -1,0 +1,120 @@
+{
+  "configVersion": 1,
+  "timestamp": 1778341194446,
+  "index": "https://zclt.github.io/MercApp/index.html",
+  "assetGroups": [
+    {
+      "name": "app-shell",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "https://zclt.github.io/MercApp/chunk-VYLZNNFV.js",
+        "https://zclt.github.io/MercApp/chunk-XVUXAYCW.js",
+        "https://zclt.github.io/MercApp/favicon.ico",
+        "https://zclt.github.io/MercApp/index.html",
+        "https://zclt.github.io/MercApp/main-7F54M62Y.js",
+        "https://zclt.github.io/MercApp/manifest.webmanifest",
+        "https://zclt.github.io/MercApp/polyfills-5CFQRCPP.js",
+        "https://zclt.github.io/MercApp/styles-MDPT4BUQ.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "https://zclt.github.io/MercApp/icons/icon-128x128.png",
+        "https://zclt.github.io/MercApp/icons/icon-144x144.png",
+        "https://zclt.github.io/MercApp/icons/icon-152x152.png",
+        "https://zclt.github.io/MercApp/icons/icon-192x192.png",
+        "https://zclt.github.io/MercApp/icons/icon-384x384.png",
+        "https://zclt.github.io/MercApp/icons/icon-512x512.png",
+        "https://zclt.github.io/MercApp/icons/icon-72x72.png",
+        "https://zclt.github.io/MercApp/icons/icon-96x96.png",
+        "https://zclt.github.io/MercApp/icons/icon.svg",
+        "https://zclt.github.io/MercApp/media/material-icons-JLIDJUWE.woff",
+        "https://zclt.github.io/MercApp/media/material-icons-LEZCGFVT.woff2",
+        "https://zclt.github.io/MercApp/media/material-icons-outlined-7BWLPMFK.woff2",
+        "https://zclt.github.io/MercApp/media/material-icons-outlined-PCUTWIDZ.woff",
+        "https://zclt.github.io/MercApp/media/material-icons-round-SLOHZIXU.woff",
+        "https://zclt.github.io/MercApp/media/material-icons-round-WEHMTW23.woff2",
+        "https://zclt.github.io/MercApp/media/material-icons-sharp-HCCYMPXE.woff2",
+        "https://zclt.github.io/MercApp/media/material-icons-sharp-U4OLFP3G.woff",
+        "https://zclt.github.io/MercApp/media/material-icons-two-tone-LCGWGE2N.woff",
+        "https://zclt.github.io/MercApp/media/material-icons-two-tone-M5N5K6F5.woff2"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "google-fonts",
+      "patterns": [
+        "https:\\/\\/fonts\\.googleapis\\.com\\/.*",
+        "https:\\/\\/fonts\\.gstatic\\.com\\/.*"
+      ],
+      "strategy": "performance",
+      "maxSize": 20,
+      "maxAge": 2592000000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "https://zclt.github.io/MercApp/chunk-VYLZNNFV.js": "9ae063f0871c2eefb12565ce3a7b10c0f94ffcdd",
+    "https://zclt.github.io/MercApp/chunk-XVUXAYCW.js": "f4bc7463f88377603785b467cd53f6452d00d855",
+    "https://zclt.github.io/MercApp/favicon.ico": "9b461fd767f976390397763dddb8dc524952a371",
+    "https://zclt.github.io/MercApp/icons/icon-128x128.png": "2808cd9511d5aa15f314b3f9ab0c780d861714c9",
+    "https://zclt.github.io/MercApp/icons/icon-144x144.png": "cbdb044433efa50d4d84425782a292cc2ad07dd4",
+    "https://zclt.github.io/MercApp/icons/icon-152x152.png": "3123512adb452f6d659502eaaa9a094f8811692d",
+    "https://zclt.github.io/MercApp/icons/icon-192x192.png": "9cd74508c63e29b7cb67f63229b7991ae745a3e0",
+    "https://zclt.github.io/MercApp/icons/icon-384x384.png": "bafba0d8828b0766fcf3b9eb1a6eadaadade5bb9",
+    "https://zclt.github.io/MercApp/icons/icon-512x512.png": "a9a0805af9b9b98290a84f2a3c8f8915ff2b5b89",
+    "https://zclt.github.io/MercApp/icons/icon-72x72.png": "8012173054fb1c9fb6041c88902bf9c7f4904393",
+    "https://zclt.github.io/MercApp/icons/icon-96x96.png": "14aff9627b3f4af72df711b8f44e62917242e93d",
+    "https://zclt.github.io/MercApp/icons/icon.svg": "c8744bd75f67c2ed75af51570d5aed873d14c93d",
+    "https://zclt.github.io/MercApp/index.html": "497c6cbc60e392650c3c414ddad57bfeab96a1f0",
+    "https://zclt.github.io/MercApp/main-7F54M62Y.js": "2277f7747e5e7f099235f0650e3f73497969b10d",
+    "https://zclt.github.io/MercApp/manifest.webmanifest": "7aead77425d9a38b6219e1c38098ec8033d4a9a8",
+    "https://zclt.github.io/MercApp/media/material-icons-JLIDJUWE.woff": "e4bb7c1e40d3febee58df963db276b2bf68c117b",
+    "https://zclt.github.io/MercApp/media/material-icons-LEZCGFVT.woff2": "0bc0c675480d94ec7e8609dda6227f88c5d08d2c",
+    "https://zclt.github.io/MercApp/media/material-icons-outlined-7BWLPMFK.woff2": "2f9e28ab559782402f27332633c843c40209d95a",
+    "https://zclt.github.io/MercApp/media/material-icons-outlined-PCUTWIDZ.woff": "b52ccd8fca4199d257b2a9fe377db29862f2853e",
+    "https://zclt.github.io/MercApp/media/material-icons-round-SLOHZIXU.woff": "c41bfee3f01218e18d53f4f4cac00f385ac9fbb1",
+    "https://zclt.github.io/MercApp/media/material-icons-round-WEHMTW23.woff2": "abe05e0641f1050fbe00ef0dbb10c5ea72c26cff",
+    "https://zclt.github.io/MercApp/media/material-icons-sharp-HCCYMPXE.woff2": "cf1c7b4d066d18af44cf7bc664dd2e46652a3a30",
+    "https://zclt.github.io/MercApp/media/material-icons-sharp-U4OLFP3G.woff": "829cb48cb2dd17ae5e425b82dc186eb670694a10",
+    "https://zclt.github.io/MercApp/media/material-icons-two-tone-LCGWGE2N.woff": "02225d888afe4eebc7312b7432878dc8aef1f50f",
+    "https://zclt.github.io/MercApp/media/material-icons-two-tone-M5N5K6F5.woff2": "296ff0bff395a77c2e33e7e31fffe73980bd93cf",
+    "https://zclt.github.io/MercApp/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
+    "https://zclt.github.io/MercApp/styles-MDPT4BUQ.css": "c66e565be35dc7810c907f430bd3b397cb88bbd0"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
