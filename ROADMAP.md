@@ -21,9 +21,9 @@ A conectividade dentro de supermercados muitas vezes é instável ou inexistente
 
 Ajudar o usuário a entender a inflação dos seus produtos e o seu padrão de gastos.
 
-- [ ] **Histórico de Preços:** Registrar o histórico do preço de cada item a cada compra concluída.
-- [ ] **Indicadores Visuais:** Mostrar uma pequena seta (verde ⬇️ ou vermelha ⬆️) indicando se o produto está mais caro ou barato em relação à última compra.
-- [ ] **Gráficos de Gastos:** Exibir gráficos mensais/semanais de despesas no supermercado (similar ao `money-coelho-app`).
+- [x] **Histórico de Preços:** Registrar o histórico do preço de cada item a cada compra concluída.
+- [x] **Indicadores Visuais:** Mostrar uma pequena seta (verde ⬇️ ou vermelha ⬆️) indicando se o produto está mais caro ou barato em relação à última compra.
+- [x] **Gráficos de Gastos:** Exibir gráficos mensais/semanais de despesas no supermercado (similar ao `money-coelho-app`).
 
 ---
 

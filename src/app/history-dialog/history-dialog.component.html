@@ -1,0 +1,58 @@
+<h2 mat-dialog-title class="dialog-title">
+  <mat-icon>bar_chart</mat-icon>
+  Histórico de Gastos
+</h2>
+
+<mat-dialog-content>
+  <p class="section-label">Últimas 8 semanas</p>
+  <div class="chart">
+    @for (week of weeklyData(); track $index) {
+      <div class="chart-col">
+        @if (week.total > 0) {
+          <span class="chart-value">{{ week.total | currency:'BRL':'' : '1.0-0' }}</span>
+        }
+        <div class="chart-bar-wrap">
+          <div class="chart-bar"
+            [style.height.px]="barHeight(week.total)"
+            [class.chart-bar-empty]="week.total === 0">
+          </div>
+        </div>
+        <span class="chart-label">{{ week.label }}</span>
+      </div>
+    }
+  </div>
+
+  <p class="section-label">Compras anteriores</p>
+
+  @if (sessions().length === 0) {
+    <div class="empty-history">
+      <mat-icon>receipt_long</mat-icon>
+      <p>Nenhuma compra registrada</p>
+      <span>Esvazie o carrinho para registrar uma compra</span>
+    </div>
+  } @else {
+    @for (session of sessions(); track session.date) {
+      <mat-card class="session-card">
+        <div class="session-header">
+          <div>
+            <div class="session-date">{{ session.date | date:'dd/MM/yyyy' }}</div>
+            <div class="session-meta">
+              {{ session.date | date:'HH:mm' }} &middot;
+              {{ session.items.length }} {{ session.items.length === 1 ? 'item' : 'itens' }}
+            </div>
+          </div>
+          <div class="session-total">{{ session.total | currency:'BRL':'' }}</div>
+        </div>
+        <div class="session-items">
+          @for (item of session.items; track $index) {
+            <span class="session-item">{{ item.nome }}</span>
+          }
+        </div>
+      </mat-card>
+    }
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Fechar</button>
+</mat-dialog-actions>
