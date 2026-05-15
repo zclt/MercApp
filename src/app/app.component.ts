@@ -18,10 +18,12 @@ import { ShoppingListService } from './shopping-list.service';
 import { VoiceService } from './voice.service';
 import { PwaUpdateService } from './pwa-update.service';
 import { HistoryService } from './history.service';
+import { BarcodeService } from './barcode.service';
 import { TouchGestureDirective } from './touch-gesture.directive';
 import { AddItemComponent } from './add-item/add-item.component';
 import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
 import { HistoryDialogComponent } from './history-dialog/history-dialog.component';
+import { BarcodeScannerComponent } from './barcode-scanner/barcode-scanner.component';
 import { ItemTodo } from './model/item-todo';
 import { ItemInfo } from './model/item-info';
 
@@ -53,6 +55,7 @@ export class AppComponent {
   protected readonly list = inject(ShoppingListService);
   protected readonly voice = inject(VoiceService);
   protected readonly history = inject(HistoryService);
+  private readonly barcodeService = inject(BarcodeService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -68,16 +71,24 @@ export class AppComponent {
   multi = false;
   itemAdded = false;
   private selectedItem: ItemTodo | null = null;
+  protected currentBarcode: string | null = null;
+  private pendingPhoto: string | null = null;
 
   setCheckoutItem(): void {
     if (!(this.valorReal > 0)) return;
-    this.cart.addOrIncrement(this.valorReal, this.nome, this.multi);
+    const photo = this.pendingPhoto ?? undefined;
+    this.cart.addOrIncrement(this.valorReal, this.nome, this.multi, photo);
+    if (this.currentBarcode && this.nome.trim() && !this.multi) {
+      this.barcodeService.register(this.currentBarcode, this.nome.trim(), photo);
+    }
     if (this.selectedItem) {
       this.list.check(this.selectedItem);
       this.selectedItem = null;
     }
     this.multi = true;
     this.itemAdded = true;
+    this.currentBarcode = null;
+    this.pendingPhoto = null;
     setTimeout(() => { this.itemAdded = false; this.cdr.markForCheck(); }, 400);
   }
 
@@ -121,7 +132,11 @@ export class AppComponent {
     if (this.multi || v.length === 0) {
       this.valor = '0';
       this.nome = '';
-      if (v.length === 0) this.selectedItem = null;
+      if (v.length === 0) {
+        this.selectedItem = null;
+        this.currentBarcode = null;
+        this.pendingPhoto = null;
+      }
     }
     this.multi = false;
     this.valor += v;
@@ -175,6 +190,26 @@ export class AppComponent {
     }
 
     return null;
+  }
+
+  scanBarcodeForCart(): void {
+    const ref = this.dialog.open(BarcodeScannerComponent, {
+      width: '100%',
+      maxWidth: '400px',
+    });
+    ref.afterClosed().subscribe((code: string | null) => {
+      if (!code) return;
+      const entry = this.barcodeService.lookup(code);
+      this.currentBarcode = code;
+      if (entry) {
+        this.nome = entry.nome;
+        this.pendingPhoto = entry.photo ?? null;
+        this.snackBar.open(`Produto identificado: ${entry.nome}`, '', { duration: 2500 });
+      } else {
+        this.snackBar.open('Código escaneado — digite o nome do produto', '', { duration: 3000 });
+      }
+      this.cdr.markForCheck();
+    });
   }
 
   openPhotoDialog(item: ItemInfo): void {

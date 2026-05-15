@@ -41,8 +41,8 @@ As compras da casa geralmente envolvem mais de uma pessoa.
 
 Acelerar a adição e identificação de produtos.
 
-- [ ] **Escanear Códigos:** Integração com a câmera (via API do HTML5) para ler códigos EAN/UPC.
-- [ ] **Auto-preenchimento:** Se o código já for conhecido pelo app (comprado anteriormente), preencher o nome e a foto automaticamente.
+- [x] **Escanear Códigos:** Integração com a câmera (via API do HTML5) para ler códigos EAN/UPC.
+- [x] **Auto-preenchimento:** Se o código já for conhecido pelo app (comprado anteriormente), preencher o nome e a foto automaticamente.
 
 > [!TIP]
 > O uso de bibliotecas como `html5-qrcode` pode facilitar a integração do leitor sem depender de componentes muito pesados.

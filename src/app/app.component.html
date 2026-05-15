@@ -124,6 +124,10 @@
                   @if (multi) { <mat-icon>add_circle</mat-icon> } @else { <mat-icon>add_shopping_cart</mat-icon> }
                   {{ multi ? 'Mais um' : 'Adicionar' }}
                 </button>
+                <button mat-icon-button class="scan-btn" [class.scan-active]="currentBarcode"
+                  (click)="scanBarcodeForCart()" aria-label="Escanear código de barras">
+                  <mat-icon>qr_code_scanner</mat-icon>
+                </button>
                 @if (voice.supported) {
                   <button mat-icon-button class="mic-btn" [class.mic-active]="voice.isListening()"
                     (click)="startVoiceCalculator()" aria-label="Comando de voz">
