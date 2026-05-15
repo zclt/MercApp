@@ -149,6 +149,23 @@ button {
   margin-left: 4px;
 }
 
+.price-arrow {
+  font-size: 13px;
+  width: 13px;
+  height: 13px;
+  vertical-align: middle;
+  margin-left: 3px;
+  line-height: 1;
+}
+
+.price-down {
+  color: #43a047;
+}
+
+.price-up {
+  color: #e53935;
+}
+
 .item-name {
   font-size: 0.85rem;
   opacity: 0.65;

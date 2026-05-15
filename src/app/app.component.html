@@ -32,6 +32,9 @@
         </button>
         <span class="flex-1 toolbar-total">{{ cart.sum() | currency:'BRL':'' }}</span>
         <span class="example-spacer"></span>
+        <button mat-icon-button aria-label="Ver histórico de gastos" (click)="openHistoryDialog()">
+          <mat-icon>bar_chart</mat-icon>
+        </button>
         <button mat-icon-button aria-label="Ver carrinho" [matMenuTriggerFor]="menuGeral">
           <mat-icon [matBadge]="cart.count()" matBadgeOverlap="true">shopping_cart</mat-icon>
         </button>
@@ -55,6 +58,11 @@
               <p class="item-price">
                 <span class="item-count">{{ item.count }}×</span>
                 {{ item.valor | currency:'BRL':'' }}
+                @if (priceIndicator(item) === 'down') {
+                  <mat-icon class="price-arrow price-down">arrow_downward</mat-icon>
+                } @else if (priceIndicator(item) === 'up') {
+                  <mat-icon class="price-arrow price-up">arrow_upward</mat-icon>
+                }
                 <span class="item-subtotal">= {{ item.valor * item.count | currency:'BRL':'' }}</span>
               </p>
               <div class="item-name">{{ item.nome }}</div>

@@ -17,9 +17,11 @@ import { CartService } from './cart.service';
 import { ShoppingListService } from './shopping-list.service';
 import { VoiceService } from './voice.service';
 import { PwaUpdateService } from './pwa-update.service';
+import { HistoryService } from './history.service';
 import { TouchGestureDirective } from './touch-gesture.directive';
 import { AddItemComponent } from './add-item/add-item.component';
 import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
+import { HistoryDialogComponent } from './history-dialog/history-dialog.component';
 import { ItemTodo } from './model/item-todo';
 import { ItemInfo } from './model/item-info';
 
@@ -50,6 +52,7 @@ export class AppComponent {
   protected readonly cart = inject(CartService);
   protected readonly list = inject(ShoppingListService);
   protected readonly voice = inject(VoiceService);
+  protected readonly history = inject(HistoryService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -85,6 +88,8 @@ export class AppComponent {
 
   resetAll(): void {
     const backup = [...this.cart.items()];
+    const total = this.cart.sum();
+    this.history.save(backup, total);
     this.cart.reset();
     this.list.uncheckAll();
     this.concatValor('');
@@ -92,9 +97,24 @@ export class AppComponent {
     this.snackBar.open('Carrinho esvaziado', 'Desfazer', { duration: 4000 })
       .onAction()
       .subscribe(() => {
+        this.history.removeLastSession();
         this.cart.restore(backup);
         this.cdr.markForCheck();
       });
+  }
+
+  priceIndicator(item: ItemInfo): 'up' | 'down' | null {
+    const last = this.history.lastPrices().get(item.nome.toLowerCase());
+    if (last === undefined || last === item.valor) return null;
+    return item.valor > last ? 'up' : 'down';
+  }
+
+  openHistoryDialog(): void {
+    this.dialog.open(HistoryDialogComponent, {
+      width: '100%',
+      maxWidth: '560px',
+      maxHeight: '90vh',
+    });
   }
 
   concatValor(v: string): void {
