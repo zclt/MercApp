@@ -3,6 +3,10 @@
   animation: mic-pulse 1s ease-in-out infinite;
 }
 
+.scan-active {
+  color: #43a047 !important;
+}
+
 @keyframes mic-pulse {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.35; }

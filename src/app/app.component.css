@@ -287,6 +287,14 @@ button {
   color: #E06010;
 }
 
+.scan-btn {
+  color: #E06010;
+}
+
+.scan-active {
+  color: #43a047 !important;
+}
+
 .mic-active {
   color: #d32f2f !important;
   animation: mic-pulse 1s ease-in-out infinite;
