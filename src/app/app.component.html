@@ -2,7 +2,15 @@
   <mat-drawer-container style="height: 100%;">
     <mat-drawer mode="over" #drawer style="width: 50%;">
       <div class="flex-col flex-1">
-        <button mat-raised-button (click)="openDialog()">Adicionar</button>
+        <div class="drawer-header">
+          <button mat-raised-button (click)="openDialog()">Adicionar</button>
+          <button mat-icon-button aria-label="Compartilhar lista" (click)="openShareDialog()"
+            [matTooltip]="shareService.currentShareId() ? 'Lista compartilhada ativa' : 'Compartilhar lista'">
+            <mat-icon [class.share-active]="shareService.currentShareId()">
+              {{ shareService.currentShareId() ? 'link' : 'share' }}
+            </mat-icon>
+          </button>
+        </div>
         <div style="flex: 0 0 90%; min-height: 0;">
           <mat-card class="flex-1" style="overflow: auto;">
             @for (item of list.items(); track $index; let i = $index) {
@@ -43,6 +51,16 @@
             Esvaziar carrinho
           </button>
         </mat-menu>
+        <button mat-icon-button aria-label="Conta" (click)="openAuthDialog()" class="auth-btn">
+          @if (auth.user()?.photoURL) {
+            <img class="toolbar-avatar" [src]="auth.user()!.photoURL!" alt="Avatar" referrerpolicy="no-referrer">
+          } @else {
+            <mat-icon>account_circle</mat-icon>
+          }
+          @if (shareService.currentShareId()) {
+            <span class="sync-dot"></span>
+          }
+        </button>
       </mat-toolbar>
 
       <mat-card class="flex-1" style="overflow: auto;">

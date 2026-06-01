@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>
+  <mat-icon>share</mat-icon>
+  Lista Compartilhada
+</h2>
+
+<mat-dialog-content>
+  @if (share.currentShareId()) {
+    <div class="section">
+      <p class="section-label">Sua lista está ativa. Compartilhe o link:</p>
+      <div class="link-row">
+        <code class="link-text">{{ share.shareLink() }}</code>
+        <button mat-icon-button (click)="copyLink()" aria-label="Copiar link">
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </div>
+      <button mat-stroked-button color="warn" class="leave-btn" (click)="leaveList()">
+        <mat-icon>exit_to_app</mat-icon>
+        Sair da lista compartilhada
+      </button>
+    </div>
+  } @else {
+    <div class="section">
+      <p class="section-label">Criar uma nova lista compartilhada com os dados atuais:</p>
+      <button mat-raised-button color="primary" (click)="createList()" [disabled]="loading()">
+        <mat-icon>add_link</mat-icon>
+        {{ loading() ? 'Criando...' : 'Criar lista compartilhada' }}
+      </button>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <p class="section-label">Ou entre em uma lista existente:</p>
+      <mat-form-field appearance="outline" class="join-field">
+        <mat-label>Cole o link de convite</mat-label>
+        <input matInput [(ngModel)]="joinInput" placeholder="https://... ou código" (keydown.enter)="joinList()">
+        <mat-icon matSuffix>link</mat-icon>
+      </mat-form-field>
+      @if (error()) {
+        <p class="error-msg">{{ error() }}</p>
+      }
+      <button mat-raised-button (click)="joinList()" [disabled]="!joinInput.trim() || loading()">
+        <mat-icon>group_add</mat-icon>
+        {{ loading() ? 'Entrando...' : 'Entrar na lista' }}
+      </button>
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Fechar</button>
+</mat-dialog-actions>

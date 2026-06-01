@@ -8,6 +8,7 @@ export interface BarcodeEntry {
 @Injectable({ providedIn: 'root' })
 export class BarcodeService {
   private readonly _db = signal<Record<string, BarcodeEntry>>({});
+  readonly db = this._db.asReadonly();
 
   constructor() {
     this.load();
@@ -19,6 +20,10 @@ export class BarcodeService {
       const saved = localStorage.getItem('BarcodeDB');
       if (saved) this._db.set(JSON.parse(saved));
     } catch {}
+  }
+
+  loadFromRemote(db: Record<string, BarcodeEntry>): void {
+    this._db.set(db);
   }
 
   lookup(code: string): BarcodeEntry | null {

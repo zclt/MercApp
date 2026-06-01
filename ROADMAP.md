@@ -31,9 +31,9 @@ Ajudar o usuário a entender a inflação dos seus produtos e o seu padrão de g
 
 As compras da casa geralmente envolvem mais de uma pessoa.
 
-- [ ] **Autenticação:** Login simples via Google (Firebase/Supabase).
-- [ ] **Compartilhamento de Listas:** Enviar um convite para outros usuários acessarem e editarem a mesma lista.
-- [ ] **Atualização em Tempo Real (WebSockets):** Se o usuário A no mercado marca um item como comprado, o usuário B em casa vê a atualização imediatamente e pode adicionar itens de última hora.
+- [x] **Autenticação:** Login simples via Google (Firebase Auth).
+- [x] **Compartilhamento de Listas:** Enviar um link de convite para outros usuários acessarem e editarem a mesma lista.
+- [x] **Atualização em Tempo Real (Firestore):** Se o usuário A no mercado marca um item como comprado, o usuário B em casa vê a atualização imediatamente e pode adicionar itens de última hora.
 
 ---
 

@@ -1,0 +1,38 @@
+.auth-guest, .auth-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  text-align: center;
+}
+
+.auth-icon {
+  font-size: 56px;
+  width: 56px;
+  height: 56px;
+  color: #9e9e9e;
+}
+
+.user-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 4px 0 0;
+}
+
+.user-email {
+  font-size: 0.85rem;
+  color: #757575;
+  margin: 0;
+}
+
+mat-spinner {
+  display: inline-block;
+}
