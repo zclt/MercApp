@@ -13,17 +13,23 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CartService } from './cart.service';
 import { ShoppingListService } from './shopping-list.service';
 import { VoiceService } from './voice.service';
 import { PwaUpdateService } from './pwa-update.service';
 import { HistoryService } from './history.service';
 import { BarcodeService } from './barcode.service';
+import { AuthService } from './auth.service';
+import { ShareService } from './share.service';
+import { SyncService } from './sync.service';
 import { TouchGestureDirective } from './touch-gesture.directive';
 import { AddItemComponent } from './add-item/add-item.component';
 import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
 import { HistoryDialogComponent } from './history-dialog/history-dialog.component';
 import { BarcodeScannerComponent } from './barcode-scanner/barcode-scanner.component';
+import { AuthDialogComponent } from './auth-dialog/auth-dialog.component';
+import { ShareDialogComponent } from './share-dialog/share-dialog.component';
 import { ItemTodo } from './model/item-todo';
 import { ItemInfo } from './model/item-info';
 
@@ -47,6 +53,7 @@ import { ItemInfo } from './model/item-info';
     MatChipsModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatTooltipModule,
     TouchGestureDirective,
   ],
 })
@@ -55,11 +62,15 @@ export class AppComponent {
   protected readonly list = inject(ShoppingListService);
   protected readonly voice = inject(VoiceService);
   protected readonly history = inject(HistoryService);
+  protected readonly auth = inject(AuthService);
+  protected readonly shareService = inject(ShareService);
   private readonly barcodeService = inject(BarcodeService);
   private readonly dialog = inject(MatDialog);
   private readonly snackBar = inject(MatSnackBar);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly pwaUpdate = inject(PwaUpdateService);
+  // Eagerly instantiate SyncService so effects start immediately
+  private readonly _sync = inject(SyncService);
 
   constructor() {
     this.pwaUpdate.init();
@@ -125,6 +136,20 @@ export class AppComponent {
       width: '100%',
       maxWidth: '560px',
       maxHeight: '90vh',
+    });
+  }
+
+  openAuthDialog(): void {
+    this.dialog.open(AuthDialogComponent, {
+      width: '100%',
+      maxWidth: '360px',
+    });
+  }
+
+  openShareDialog(): void {
+    this.dialog.open(ShareDialogComponent, {
+      width: '100%',
+      maxWidth: '420px',
     });
   }
 

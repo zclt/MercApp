@@ -42,6 +42,47 @@ button {
   color: #fff;
 }
 
+.auth-btn {
+  position: relative;
+}
+
+.toolbar-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.sync-dot {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4caf50;
+  border: 1.5px solid #e06010;
+  animation: sync-pulse 2s ease-in-out infinite;
+}
+
+@keyframes sync-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* --- Drawer header --- */
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 4px 8px;
+}
+
+.share-active {
+  color: #4caf50;
+}
+
 /* --- Cart items --- */
 .item-card {
   margin-bottom: 8px;

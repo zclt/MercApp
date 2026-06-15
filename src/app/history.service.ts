@@ -39,6 +39,10 @@ export class HistoryService {
     this._sessions.update(s => [...s, session]);
   }
 
+  loadFromRemote(sessions: PurchaseSession[]): void {
+    this._sessions.set(sessions);
+  }
+
   removeLastSession(): void {
     this._sessions.update(s => s.slice(0, -1));
   }
