@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="#E06010"/>
+  <!-- Cart body -->
+  <path d="M120 140 h40 l52 208 h192 l40 -144 H188" fill="none" stroke="#ffffff" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Wheels -->
+  <circle cx="232" cy="388" r="28" fill="#ffffff"/>
+  <circle cx="352" cy="388" r="28" fill="#ffffff"/>
+</svg>

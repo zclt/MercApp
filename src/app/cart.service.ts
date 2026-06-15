@@ -19,14 +19,16 @@ export class CartService {
     } catch {}
   }
 
-  addOrIncrement(valor: number, nome: string, multi: boolean): void {
+  addOrIncrement(valor: number, nome: string, multi: boolean, photo?: string): void {
     if (multi && this.items().length > 0) {
       this.items.update(([first, ...rest]) => {
         first.count++;
         return [first, ...rest];
       });
     } else {
-      this.items.update(items => [new ItemInfo(valor, 1, nome), ...items]);
+      const item = new ItemInfo(valor, 1, nome);
+      if (photo) item.photo = photo;
+      this.items.update(items => [item, ...items]);
     }
   }
 
