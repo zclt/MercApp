@@ -32,6 +32,9 @@
     "tslib": "^2.3.0",
     "zone.js": "~0.15.1"
   },
+  "overrides": {
+    "@grpc/grpc-js": "^1.14.6"
+  },
   "devDependencies": {
     "@angular/build": "^20.3.39",
     "@angular/cli": "^20.3.39",
