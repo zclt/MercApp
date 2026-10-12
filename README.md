@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛒 MercApp
+# <img src="public/icons/icon.svg" width="40" height="40" style="vertical-align:middle"/> MercApp
 
 **Lista de compras inteligente com cálculo de valores em tempo real**
 

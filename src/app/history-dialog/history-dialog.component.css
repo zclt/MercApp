@@ -1,0 +1,168 @@
+.dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+}
+
+.dialog-title mat-icon {
+  color: #E06010;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.45;
+  margin: 16px 0 8px;
+}
+
+/* --- Chart --- */
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 150px;
+  padding: 0 2px;
+}
+
+.chart-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.chart-value {
+  font-size: 0.58rem;
+  color: #E06010;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+  min-height: 14px;
+  word-break: break-all;
+}
+
+.chart-bar-wrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding: 2px 1px 0;
+}
+
+.chart-bar {
+  width: 100%;
+  background: #E06010;
+  border-radius: 3px 3px 0 0;
+  opacity: 0.85;
+  min-height: 2px;
+  transition: height 0.3s ease;
+}
+
+.chart-bar-empty {
+  opacity: 0.15;
+  height: 4px !important;
+}
+
+.chart-label {
+  font-size: 0.62rem;
+  opacity: 0.55;
+  white-space: nowrap;
+  margin-top: 3px;
+}
+
+/* --- Session cards --- */
+.session-card {
+  margin-bottom: 8px;
+  padding: 10px 12px;
+}
+
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.session-date {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.session-meta {
+  font-size: 0.75rem;
+  opacity: 0.55;
+  margin-top: 1px;
+}
+
+.session-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.session-total {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #E06010;
+}
+
+.expand-icon {
+  opacity: 0.4;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.expand-icon-open {
+  transform: rotate(180deg);
+}
+
+.session-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.session-item {
+  font-size: 0.72rem;
+  background: rgba(224, 96, 16, 0.1);
+  color: #E06010;
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+
+/* --- Empty state --- */
+.empty-history {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  opacity: 0.4;
+}
+
+.empty-history mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #E06010;
+}
+
+.empty-history p {
+  margin: 4px 0 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.empty-history span {
+  font-size: 0.82rem;
+}

@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>Conta</h2>
+
+<mat-dialog-content>
+  @if (!auth.isLoggedIn()) {
+    <div class="auth-guest">
+      <mat-icon class="auth-icon">account_circle</mat-icon>
+      <p>Entre com sua conta Google para sincronizar dados e compartilhar listas.</p>
+    </div>
+  } @else {
+    <div class="auth-user">
+      @if (auth.user()?.photoURL) {
+        <img class="user-avatar" [src]="auth.user()!.photoURL!" alt="Avatar" referrerpolicy="no-referrer">
+      } @else {
+        <mat-icon class="auth-icon">account_circle</mat-icon>
+      }
+      <p class="user-name">{{ auth.user()?.displayName }}</p>
+      <p class="user-email">{{ auth.user()?.email }}</p>
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Fechar</button>
+  @if (!auth.isLoggedIn()) {
+    <button mat-raised-button color="primary" (click)="signIn()" [disabled]="loading">
+      <mat-icon>login</mat-icon>
+      {{ loading ? 'Entrando...' : 'Entrar com Google' }}
+    </button>
+  } @else {
+    <button mat-stroked-button color="warn" (click)="signOut()">
+      <mat-icon>logout</mat-icon>
+      Sair
+    </button>
+  }
+</mat-dialog-actions>

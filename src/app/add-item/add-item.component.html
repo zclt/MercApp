@@ -5,6 +5,12 @@
       [(ngModel)]="data.nome"
       cdkFocusInitial
       (keydown.enter)="confirmar()">
+    <button matSuffix mat-icon-button type="button"
+      (click)="scanBarcode()"
+      aria-label="Escanear código de barras"
+      [class.scan-active]="data.barcode">
+      <mat-icon>qr_code_scanner</mat-icon>
+    </button>
     @if (voice.supported) {
       <button matSuffix mat-icon-button type="button"
         [class.mic-active]="voice.isListening()"
@@ -16,5 +22,5 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="data.nome">Ok</button>
+  <button mat-button (click)="confirmar()">Ok</button>
 </div>
