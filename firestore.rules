@@ -1,0 +1,47 @@
+rules_version = '2';
+
+// Regras de segurança do MercApp.
+// Deploy: `firebase deploy --only firestore:rules` (ou cole no Console → Firestore → Regras).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // Fotos ficam em subcoleção (fora do doc principal, que tem limite de 1 MB)
+    function isValidPhoto() {
+      return request.resource.data.keys().hasOnly(['data'])
+        && request.resource.data.data is string
+        && request.resource.data.data.size() < 500000;
+    }
+
+    // Dados pessoais: users/{uid} — apenas o próprio usuário
+    match /users/{uid} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+
+      match /photos/{photoId} {
+        allow read, delete: if signedIn() && request.auth.uid == uid;
+        allow create, update: if signedIn() && request.auth.uid == uid && isValidPhoto();
+      }
+    }
+
+    // Listas compartilhadas: quem tem o link (ID) pode ler e editar.
+    // `list` não é permitido, então não dá para enumerar as listas existentes.
+    match /sharedLists/{listId} {
+      allow get: if signedIn();
+      allow create: if signedIn() && request.resource.data.ownerUid == request.auth.uid;
+      allow update: if signedIn() && request.resource.data.ownerUid == resource.data.ownerUid;
+      allow delete: if signedIn() && resource.data.ownerUid == request.auth.uid;
+
+      match /photos/{photoId} {
+        allow get: if signedIn();
+        allow create, update: if signedIn()
+          && exists(/databases/$(database)/documents/sharedLists/$(listId))
+          && isValidPhoto();
+        allow delete: if signedIn()
+          && get(/databases/$(database)/documents/sharedLists/$(listId)).data.ownerUid == request.auth.uid;
+      }
+    }
+  }
+}

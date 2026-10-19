@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShareService } from '../share.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-share-dialog',
@@ -28,6 +29,7 @@ import { ShareService } from '../share.service';
 })
 export class ShareDialogComponent {
   protected readonly share = inject(ShareService);
+  private readonly auth = inject(AuthService);
   private readonly dialogRef = inject(MatDialogRef<ShareDialogComponent>);
   private readonly snackBar = inject(MatSnackBar);
 
@@ -36,23 +38,42 @@ export class ShareDialogComponent {
   error = signal('');
 
   async createList(): Promise<void> {
+    if (!this.requireLogin()) return;
     this.loading.set(true);
-    const id = await this.share.createSharedList();
-    this.loading.set(false);
-    if (!id) this.error.set('Firebase não configurado.');
+    this.error.set('');
+    try {
+      const id = await this.share.createSharedList();
+      if (!id) this.error.set('Firebase não configurado.');
+    } catch {
+      this.error.set('Não foi possível criar a lista. Tente novamente.');
+    } finally {
+      this.loading.set(false);
+    }
   }
 
   async joinList(): Promise<void> {
-    if (!this.joinInput.trim()) return;
+    if (!this.joinInput.trim() || !this.requireLogin()) return;
     this.loading.set(true);
     this.error.set('');
-    const ok = await this.share.joinSharedList(this.joinInput.trim());
-    this.loading.set(false);
-    if (ok) {
-      this.dialogRef.close(true);
-    } else {
-      this.error.set('Lista não encontrada. Verifique o link e tente novamente.');
+    try {
+      const ok = await this.share.joinSharedList(this.joinInput.trim());
+      if (ok) {
+        this.dialogRef.close(true);
+      } else {
+        this.error.set('Lista não encontrada. Verifique o link e tente novamente.');
+      }
+    } catch {
+      this.error.set('Não foi possível entrar na lista. Tente novamente.');
+    } finally {
+      this.loading.set(false);
     }
+  }
+
+  // Firestore rules only allow signed-in users to read/write shared lists
+  private requireLogin(): boolean {
+    if (this.auth.isLoggedIn()) return true;
+    this.error.set('Entre com sua conta Google para usar listas compartilhadas.');
+    return false;
   }
 
   copyLink(): void {

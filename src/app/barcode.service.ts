@@ -3,6 +3,7 @@ import { Injectable, signal, effect } from '@angular/core';
 export interface BarcodeEntry {
   nome: string;
   photo?: string;
+  photoId?: string;
 }
 
 @Injectable({ providedIn: 'root' })
