@@ -31,19 +31,24 @@ Ajudar o usuário a entender a inflação dos seus produtos e o seu padrão de g
 
 As compras da casa geralmente envolvem mais de uma pessoa.
 
-> **Status:** 🟡 código implementado, **aguardando configuração do Firebase** — sem ela o app funciona só com `localStorage` e os itens abaixo ficam inativos.
+> **Status:** 🟡 Firebase configurado (projeto `mercapp-f27dc`) e regras publicadas — **falta validar com dois dispositivos** antes de marcar os itens abaixo.
 
 - [ ] **Autenticação:** Login simples via Google (Firebase Auth). — _código pronto (`AuthService`, `AuthDialogComponent`)_
 - [ ] **Compartilhamento de Listas:** Enviar um link de convite para outros usuários acessarem e editarem a mesma lista. — _código pronto (`ShareService`, `ShareDialogComponent`, link `?join=ID`)_
 - [ ] **Atualização em Tempo Real (Firestore):** Se o usuário A no mercado marca um item como comprado, o usuário B em casa vê a atualização imediatamente e pode adicionar itens de última hora. — _código pronto (`SyncService`)_
 
 > [!WARNING]
-> **Para ativar:**
-> 1. Criar o projeto no Firebase Console (aguardando liberação de cota no Google Cloud — projetos deletados ficam em quarentena por 30 dias).
-> 2. Preencher `firebaseConfig` em `src/environments/environment.ts` e `environment.prod.ts`.
-> 3. Habilitar **Authentication → Google** e **Firestore Database** no console.
-> 4. Aplicar as regras de segurança de [`firestore.rules`](firestore.rules): `firebase deploy --only firestore:rules` (ou colar em Console → Firestore → Regras).
-> 5. Marcar os itens acima como concluídos após testar com dois dispositivos.
+> **Ativação:**
+> - [x] Criar o projeto no Firebase Console (`mercapp-f27dc`).
+> - [x] Preencher `firebaseConfig` em `src/environments/environment.ts` e `environment.prod.ts`.
+> - [x] Habilitar **Authentication → Google** e **Firestore Database** no console.
+> - [x] Publicar as regras de [`firestore.rules`](firestore.rules) com `firebase deploy --only firestore:rules` (acesso anônimo retorna 403).
+> - [ ] Adicionar `zclt.github.io` em **Authentication → Domínios autorizados** (sem isso o login falha no GitHub Pages).
+> - [ ] Testar com dois dispositivos: login, item adicionado em um aparece no outro, foto sincronizada, lista compartilhada via link.
+> - [ ] Marcar os itens acima como concluídos.
+
+> [!TIP]
+> A config web do Firebase (`apiKey` etc.) é pública por design e vai no bundle — a proteção vem das regras do Firestore. Recomendado: restringir a API key por referenciador HTTP (`localhost:4200`, `zclt.github.io`) no Google Cloud Console.
 
 > [!NOTE]
 > Fotos (base64) não vão no documento principal — ficam em uma subcoleção `photos/{photoId}` para não estourar o limite de 1 MB por documento do Firestore. A sincronização grava os arrays inteiros (última escrita vence): edições simultâneas no mesmo campo por dois usuários podem se sobrescrever.
