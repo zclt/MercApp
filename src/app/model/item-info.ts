@@ -4,5 +4,6 @@ export class ItemInfo {
     public count: number,
     public nome: string,
     public photo?: string,
+    public photoId?: string,
   ) {}
 }
