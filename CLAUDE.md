@@ -33,7 +33,15 @@ All state is held in **Angular signals** inside `providedIn: 'root'` services. E
 | `HistoryService` | `PurchaseHistory` | Past sessions (`PurchaseSession[]`) |
 | `BarcodeService` | `BarcodeDB` | Barcode → product name/photo map |
 
-`CartService.sum` and `CartService.count` are `computed()` signals derived from `items`. `HistoryService.lastPrices` is a `computed()` map used by `AppComponent.priceIndicator()` to show ↑/↓ price trend indicators on cart items.
+`CartService.sum` and `CartService.count` are `computed()` signals derived from `items`. `HistoryService.lastPrices` is a `computed()` map used by `AppComponent.priceIndicator()` to show ↑/↓ price trend indicators on cart items. `HistoryService.getWeeklyTotals()` / `getMonthlyTotals()` feed the history chart.
+
+### Firebase sync (optional)
+
+`AuthService` (Google login), `SyncService` (signals ↔ Firestore) and `ShareService` (shared lists via `?join=ID` link) only activate when `environment.firebaseConfig.apiKey` is set — `main.ts` registers the Firebase providers conditionally and the services inject them with `{ optional: true }`. Without config the app is localStorage-only.
+
+- Personal data syncs to `users/{uid}`; shared lists to `sharedLists/{id}` (with `ownerUid`). Each store is a field in that single document, written whole with `setDoc(..., { merge: true })` (last write wins).
+- Photos are **never** stored in the main document (1 MB limit): `SyncService` replaces `photo` with a content-hash `photoId` and stores the base64 in the `photos/{photoId}` subcollection, re-hydrating `photo` from cache or a fetch on snapshot.
+- Security rules live in `firestore.rules` (deploy with `firebase deploy --only firestore:rules`). Shared lists require a signed-in user.
 
 ### Price input
 
@@ -43,11 +51,13 @@ Voice input (`VoiceService`) uses the Web Speech API (`lang: 'pt-BR'`) and parse
 
 ### Dialogs
 
-Four dialogs launched from `AppComponent` via `MatDialog`:
+Six dialogs launched from `AppComponent` via `MatDialog`:
 - `AddItemComponent` — add item to shopping list (re-opens itself on confirm to allow batch entry)
 - `PhotoDialogComponent` — capture/view photo for a cart item (base64, stored in `ItemInfo.photo`)
-- `HistoryDialogComponent` — past purchase sessions with weekly totals
+- `HistoryDialogComponent` — past purchase sessions with a weekly/monthly totals chart
 - `BarcodeScannerComponent` — uses `html5-qrcode` library for camera-based barcode scanning
+- `AuthDialogComponent` — Google sign-in / sign-out
+- `ShareDialogComponent` — create, join or leave a shared list
 
 ### Gesture handling
 
@@ -61,7 +71,7 @@ The directive uses `passive: false` on `touchmove` to call `preventDefault()` an
 
 ### Models
 
-- `ItemInfo` — cart item: `valor` (unit price), `count`, `nome`, optional `photo` (base64)
+- `ItemInfo` — cart item: `valor` (unit price), `count`, `nome`, optional `photo` (base64) and `photoId` (Firestore photo reference)
 - `ItemTodo` — shopping list entry: `nome`, `checked`
 - `PurchaseSession` — history record: `date` (ISO string), `total`, `items[]`
 

@@ -23,7 +23,7 @@ Ajudar o usuário a entender a inflação dos seus produtos e o seu padrão de g
 
 - [x] **Histórico de Preços:** Registrar o histórico do preço de cada item a cada compra concluída.
 - [x] **Indicadores Visuais:** Mostrar uma pequena seta (verde ⬇️ ou vermelha ⬆️) indicando se o produto está mais caro ou barato em relação à última compra.
-- [x] **Gráficos de Gastos:** Exibir gráficos mensais/semanais de despesas no supermercado (similar ao `money-coelho-app`).
+- [x] **Gráficos de Gastos:** Exibir gráficos mensais/semanais de despesas no supermercado (similar ao `money-coelho-app`). Alternância Semanal (últimas 8 semanas) / Mensal (últimos 6 meses) no diálogo de histórico.
 
 ---
 
@@ -31,12 +31,22 @@ Ajudar o usuário a entender a inflação dos seus produtos e o seu padrão de g
 
 As compras da casa geralmente envolvem mais de uma pessoa.
 
-- [x] **Autenticação:** Login simples via Google (Firebase Auth).
-- [x] **Compartilhamento de Listas:** Enviar um link de convite para outros usuários acessarem e editarem a mesma lista.
-- [x] **Atualização em Tempo Real (Firestore):** Se o usuário A no mercado marca um item como comprado, o usuário B em casa vê a atualização imediatamente e pode adicionar itens de última hora.
+> **Status:** 🟡 código implementado, **aguardando configuração do Firebase** — sem ela o app funciona só com `localStorage` e os itens abaixo ficam inativos.
+
+- [ ] **Autenticação:** Login simples via Google (Firebase Auth). — _código pronto (`AuthService`, `AuthDialogComponent`)_
+- [ ] **Compartilhamento de Listas:** Enviar um link de convite para outros usuários acessarem e editarem a mesma lista. — _código pronto (`ShareService`, `ShareDialogComponent`, link `?join=ID`)_
+- [ ] **Atualização em Tempo Real (Firestore):** Se o usuário A no mercado marca um item como comprado, o usuário B em casa vê a atualização imediatamente e pode adicionar itens de última hora. — _código pronto (`SyncService`)_
 
 > [!WARNING]
-> **Pendente:** Criar o projeto no Firebase Console e preencher `firebaseConfig` em `src/environments/environment.ts` e `environment.prod.ts`. A criação está aguardando liberação de cota no Google Cloud (projetos deletados ficam em quarentena por 30 dias). Após criar o projeto, habilitar **Authentication → Google** e **Firestore Database** no console, e aplicar as regras de segurança documentadas no `CLAUDE.md`.
+> **Para ativar:**
+> 1. Criar o projeto no Firebase Console (aguardando liberação de cota no Google Cloud — projetos deletados ficam em quarentena por 30 dias).
+> 2. Preencher `firebaseConfig` em `src/environments/environment.ts` e `environment.prod.ts`.
+> 3. Habilitar **Authentication → Google** e **Firestore Database** no console.
+> 4. Aplicar as regras de segurança de [`firestore.rules`](firestore.rules): `firebase deploy --only firestore:rules` (ou colar em Console → Firestore → Regras).
+> 5. Marcar os itens acima como concluídos após testar com dois dispositivos.
+
+> [!NOTE]
+> Fotos (base64) não vão no documento principal — ficam em uma subcoleção `photos/{photoId}` para não estourar o limite de 1 MB por documento do Firestore. A sincronização grava os arrays inteiros (última escrita vence): edições simultâneas no mesmo campo por dois usuários podem se sobrescrever.
 
 ---
 

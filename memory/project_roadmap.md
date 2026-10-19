@@ -6,9 +6,9 @@ metadata:
 ---
 
 Etapa 1 (PWA/Offline): complete — service worker, localStorage sync, installable.
-Etapa 2 (Histórico e Gastos): complete as of 2026-05-13 — HistoryService, price indicators (↑/↓), weekly bar chart dialog.
-Etapa 3 (Sync + Auth): pending — Firebase/Supabase login, shared lists, WebSockets.
-Etapa 4 (Barcode): pending — html5-qrcode integration.
+Etapa 2 (Histórico e Gastos): complete — HistoryService, price indicators (↑/↓), chart dialog with Semanal (8 semanas) / Mensal (6 meses) toggle.
+Etapa 3 (Sync + Auth): code complete (Firebase Auth + Firestore via AuthService/SyncService/ShareService), inactive until the user creates the Firebase project and fills `firebaseConfig`. Checkboxes intentionally left unchecked in ROADMAP.md until that happens. Security rules in `firestore.rules`.
+Etapa 4 (Barcode): complete — html5-qrcode + BarcodeService auto-fill.
 Etapa 5 (Categories): pending — tags, smart ordering.
 Etapa 6 (Dark mode): pending — CSS variables theme system.
 
