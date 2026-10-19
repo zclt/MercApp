@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { HistoryService } from '../history.service';
 
 @Component({
@@ -12,18 +13,20 @@ import { HistoryService } from '../history.service';
   styleUrl: './history-dialog.component.css',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CurrencyPipe, DatePipe, MatButtonModule, MatIconModule, MatDialogModule, MatCardModule],
+  imports: [CurrencyPipe, DatePipe, MatButtonModule, MatIconModule, MatDialogModule, MatCardModule, MatButtonToggleModule],
 })
 export class HistoryDialogComponent {
   protected readonly history = inject(HistoryService);
   protected readonly dialogRef = inject(MatDialogRef<HistoryDialogComponent>);
 
-  protected readonly weeklyData = computed(() => this.history.getWeeklyTotals(8));
-  protected readonly maxWeekly = computed(() => Math.max(...this.weeklyData().map(w => w.total), 1));
+  protected readonly period = signal<'week' | 'month'>('week');
+  protected readonly chartData = computed(() =>
+    this.period() === 'week' ? this.history.getWeeklyTotals(8) : this.history.getMonthlyTotals(6));
+  protected readonly maxTotal = computed(() => Math.max(...this.chartData().map(w => w.total), 1));
   protected readonly sessions = computed(() => [...this.history.sessions()].reverse());
 
   protected barHeight(total: number): number {
-    const max = this.maxWeekly();
+    const max = this.maxTotal();
     return max > 0 ? Math.round((total / max) * 100) : 0;
   }
 

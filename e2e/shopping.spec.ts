@@ -119,4 +119,24 @@ test.describe('MercApp - Fluxo principal', () => {
     await expect(page.locator('.toolbar-total')).toContainText('0.00');
   });
 
+  test('histórico alterna gráfico entre semanal e mensal', async ({ page }) => {
+    await page.getByRole('button', { name: '5', exact: true }).click();
+    for (let i = 0; i < 3; i++) {
+      await page.getByRole('button', { name: '0', exact: true }).click();
+    }
+    await page.locator('button.add-btn').click();
+    await page.getByRole('button', { name: 'Ver carrinho' }).click();
+    await page.getByRole('menuitem', { name: 'Esvaziar carrinho' }).click();
+
+    await page.getByRole('button', { name: 'Ver histórico de gastos' }).click();
+    const dialog = page.getByRole('dialog');
+    await expect(dialog.getByText('Últimas 8 semanas')).toBeVisible();
+    await expect(dialog.locator('.chart-col')).toHaveCount(8);
+
+    await dialog.getByRole('radio', { name: 'Mensal' }).click();
+    await expect(dialog.getByText('Últimos 6 meses')).toBeVisible();
+    await expect(dialog.locator('.chart-col')).toHaveCount(6);
+    await expect(dialog.locator('.chart-col').last().locator('.chart-value')).toContainText('50');
+  });
+
 });

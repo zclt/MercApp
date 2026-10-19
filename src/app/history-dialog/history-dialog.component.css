@@ -18,6 +18,18 @@
 }
 
 /* --- Chart --- */
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.period-toggle {
+  --mat-standard-button-toggle-height: 28px;
+  font-size: 0.75rem;
+}
+
 .chart {
   display: flex;
   align-items: flex-end;

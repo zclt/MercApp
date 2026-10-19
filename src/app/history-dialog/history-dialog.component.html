@@ -4,9 +4,16 @@
 </h2>
 
 <mat-dialog-content>
-  <p class="section-label">Últimas 8 semanas</p>
+  <div class="chart-header">
+    <p class="section-label">{{ period() === 'week' ? 'Últimas 8 semanas' : 'Últimos 6 meses' }}</p>
+    <mat-button-toggle-group hideSingleSelectionIndicator class="period-toggle"
+      [value]="period()" (change)="period.set($event.value)" aria-label="Período do gráfico">
+      <mat-button-toggle value="week">Semanal</mat-button-toggle>
+      <mat-button-toggle value="month">Mensal</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
   <div class="chart">
-    @for (week of weeklyData(); track $index) {
+    @for (week of chartData(); track $index) {
       <div class="chart-col">
         @if (week.total > 0) {
           <span class="chart-value">{{ week.total | currency:'BRL':'' : '1.0-0' }}</span>

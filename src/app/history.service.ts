@@ -61,4 +61,17 @@ export class HistoryService {
       return { label, total };
     });
   }
+
+  getMonthlyTotals(months: number): { label: string; total: number }[] {
+    const now = new Date();
+    return Array.from({ length: months }, (_, m) => {
+      const start = new Date(now.getFullYear(), now.getMonth() - (months - 1 - m), 1);
+      const end = new Date(start.getFullYear(), start.getMonth() + 1, 1);
+      const total = this._sessions()
+        .filter(s => { const d = new Date(s.date); return d >= start && d < end; })
+        .reduce((sum, s) => sum + s.total, 0);
+      const label = `${start.toLocaleDateString('pt-BR', { month: 'short' }).replace('.', '')}/${String(start.getFullYear()).slice(-2)}`;
+      return { label, total };
+    });
+  }
 }
